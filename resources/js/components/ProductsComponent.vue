@@ -3,7 +3,7 @@
         <div class="container">
             <div class="mt-5">
                 <div class="row container">
-                    <div class="card col-md-3" v-for="product in products" v-bind:key="product.id">
+                    <div class="card col-md-3" v-for="product in products" :key="product.id">
                         <img class="card-img-top" src="/images/products/product1.jpg" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">{{ product.product }}</h5>
@@ -14,7 +14,7 @@
                         </div>
                     </div>
                 </div> <!-- End product card -->
-                <div v-for="product in products" v-bind:key="product.id">
+                <div v-for="product in products" :key="product.id">
                     <div class="productDetailsCont dC" v-if="productInfoDetails == product.id">
                         <div class="productDetails pD">
                             <div class="close" @click="productInfoDetails = 0">X</div>
@@ -27,15 +27,15 @@
                                     </div>
                                     <div class="row">
                                         <span class="title">Colors: </span>
-                                        <span v-for="color in product.colors" v-bind:key="color.id">{{ color.color }} &nbsp; </span>
+                                        <span v-for="color in product.colors" :key="color.id">{{ color.color }} &nbsp; </span>
                                     </div>
                                     <div class="row">
                                         <span class="title">Sizes: </span>
-                                        <span v-for="size in product.sizes" v-bind:key="size.id">{{ size.size }} &nbsp; </span>
+                                        <span v-for="size in product.sizes" :key="size.id">{{ size.size }} &nbsp; </span>
                                     </div>
                                     <div class="row">
                                         <span class="title">Materials: </span>
-                                        <span v-for="material in product.materials" v-bind:key="material.id">{{ material.material }} &nbsp; </span>
+                                        <span v-for="material in product.materials" :key="material.id">{{ material.material }} &nbsp; </span>
                                     </div>
                                     <div class="row">
                                         <span class="title">Quantity: </span>

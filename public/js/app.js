@@ -1972,36 +1972,147 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
       title: '',
       description: '',
-      color: '',
-      size: '',
-      material: '',
+      color: [],
+      size: [],
+      material: [],
       quantity: '',
       price: '',
       msg: '',
       hasVariants: false,
       options: [{
-        option: 1
+        option: 1,
+        optionSelected: 'size'
       }],
-      colorTags: ['Red', 'Blue']
+      tags: [{
+        option: '',
+        value: ''
+      }],
+      colorTags: [],
+      sizeTags: [],
+      materialTags: []
     };
   },
   methods: {
-    addOption: function addOption() {
+    addOption: function addOption(e) {
+      e.preventDefault();
       this.options.push({
         option: this.options.length + 1
       });
+      this.options[this.options.length - 1].optionSelected = 'color';
+    },
+    removeOption: function removeOption(index) {
+      this.options.splice(index, 1);
+      var optionsLen = this.options.length;
+
+      for (var i = 0; i < optionsLen; i++) {
+        this.options[i].option = i + 1;
+      }
+    },
+    addTag: function addTag(e) {
+      e.preventDefault();
+      var option = this.options.optionSelected;
+      var name = e.target.name;
+      var val = e.target.value.trim();
+      this.sizeTags = [];
+      this.colorTags = [];
+      this.materialTags = [];
+
+      if (val.length > 0) {
+        if (name === 'size') {
+          this.tags.push({
+            option: 'size',
+            value: val
+          });
+        } else if (name === 'color') {
+          this.tags.push({
+            option: 'color',
+            value: val
+          });
+        } else if (name === 'material') {
+          this.tags.push({
+            option: 'material',
+            value: val
+          });
+        }
+
+        e.target.value = '';
+      }
+
+      for (var i = 0; i < this.tags.length; i++) {
+        if (this.tags[i].option === 'size') {
+          this.sizeTags.push(this.tags[i]);
+        } else if (this.tags[i].option === 'color') {
+          this.colorTags.push(this.tags[i]);
+        } else if (this.tags[i].option === 'material') {
+          this.materialTags.push(this.tags[i]);
+        }
+
+        ;
+      }
+    },
+    removeTag: function removeTag(i) {
+      if (this.tags[i].option === 'size') {
+        this.sizeTags.splice(i, 1);
+      } else if (this.tags[i].option === 'color') {
+        this.colorTags.splice(i, 1);
+      } else if (this.tags[i].option === 'material') {
+        this.materialTags.splice(i, 1);
+      }
+
+      ;
+      this.tags.splice(i, 1);
+    },
+    removeLastTag: function removeLastTag(e) {
+      if (e.target.value.length === 0) {
+        this.removeTag(this.tags.length - 1);
+      }
     },
     create: function create() {
       var _this = this;
 
       axios.post('/cart/create', {
-        product: this.product,
+        title: this.title,
+        desciption: this.description,
         color: this.color,
         size: this.size,
         material: this.material,
@@ -6608,7 +6719,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "form input[type=checkbox][data-v-75da6b46] {\n  cursor: pointer;\n}", ""]);
+exports.push([module.i, ".pointer[data-v-75da6b46] {\n  cursor: pointer;\n}\n.tagContainer[data-v-75da6b46] {\n  width: 100%;\n  border: 1px solid #eee;\n  font-size: 0.9em;\n  padding: 0 10px;\n}\n.tagContainer > input[data-v-75da6b46] {\n  border: none;\n  outline: none;\n  background: none;\n  font-size: 0.9em;\n  line-height: 50px;\n}\n.tags[data-v-75da6b46] {\n  height: 30px;\n  float: left;\n  margin-right: 10px;\n  background-color: #ddd;\n  margin-top: 5px;\n  line-height: 30px;\n  padding: 0 5px;\n  border-radius: 5px;\n}\n.tags span.close[data-v-75da6b46] {\n  cursor: pointer;\n  font-size: 1rem;\n  line-height: 30px;\n  margin-left: 5px;\n}", ""]);
 
 // exports
 
@@ -38540,7 +38651,7 @@ var render = function() {
                       expression: "hasVariants"
                     }
                   ],
-                  staticClass: "form-check-input",
+                  staticClass: "form-check-input pointer",
                   attrs: { type: "checkbox", name: "hasVariants" },
                   domProps: {
                     checked: Array.isArray(_vm.hasVariants)
@@ -38593,16 +38704,289 @@ var render = function() {
                     _c(
                       "div",
                       [
-                        _vm._l(_vm.options, function(option) {
-                          return _c("div", [
-                            _c("h4", [
-                              _vm._v("Option " + _vm._s(option.option))
-                            ]),
-                            _vm._v(" "),
-                            _vm._m(0, true),
-                            _vm._v(" "),
-                            _c("hr")
-                          ])
+                        _vm._l(_vm.options, function(option, index) {
+                          return _c(
+                            "div",
+                            {
+                              key: option.id,
+                              staticClass: "d-flex flex-column"
+                            },
+                            [
+                              _vm.options.length > 1
+                                ? _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "d-flex justify-content-between"
+                                    },
+                                    [
+                                      _c("h4", [
+                                        _vm._v(
+                                          "Option " + _vm._s(option.option)
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c(
+                                        "h6",
+                                        {
+                                          staticClass: "float-right pointer",
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.removeOption(index)
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Remove")]
+                                      )
+                                    ]
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "row m-2" }, [
+                                _c(
+                                  "select",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: option.optionSelected,
+                                        expression: "option.optionSelected"
+                                      }
+                                    ],
+                                    staticClass: "form-control col-2",
+                                    attrs: { name: "options" },
+                                    on: {
+                                      change: function($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                          .call($event.target.options, function(
+                                            o
+                                          ) {
+                                            return o.selected
+                                          })
+                                          .map(function(o) {
+                                            var val =
+                                              "_value" in o ? o._value : o.value
+                                            return val
+                                          })
+                                        _vm.$set(
+                                          option,
+                                          "optionSelected",
+                                          $event.target.multiple
+                                            ? $$selectedVal
+                                            : $$selectedVal[0]
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("option", { attrs: { value: "size" } }, [
+                                      _vm._v("Size")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "option",
+                                      { attrs: { value: "color" } },
+                                      [_vm._v("Color")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "option",
+                                      { attrs: { value: "material" } },
+                                      [_vm._v("Material")]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-9 ml-2" }, [
+                                  _c("div", { staticClass: "tagContainer" }, [
+                                    option.optionSelected == "size"
+                                      ? _c(
+                                          "div",
+                                          _vm._l(_vm.sizeTags, function(
+                                            tag,
+                                            index
+                                          ) {
+                                            return _c(
+                                              "div",
+                                              {
+                                                key: index,
+                                                staticClass: "tags"
+                                              },
+                                              [
+                                                _c(
+                                                  "span",
+                                                  {
+                                                    staticClass: "close",
+                                                    on: {
+                                                      click: function($event) {
+                                                        return _vm.removeTag(
+                                                          index
+                                                        )
+                                                      }
+                                                    }
+                                                  },
+                                                  [_vm._v("X")]
+                                                ),
+                                                _vm._v(
+                                                  "\n                                                    " +
+                                                    _vm._s(tag.value) +
+                                                    "\n                                                "
+                                                )
+                                              ]
+                                            )
+                                          }),
+                                          0
+                                        )
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    option.optionSelected == "color"
+                                      ? _c(
+                                          "div",
+                                          _vm._l(_vm.colorTags, function(
+                                            tag,
+                                            index
+                                          ) {
+                                            return _c(
+                                              "div",
+                                              {
+                                                key: index,
+                                                staticClass: "tags"
+                                              },
+                                              [
+                                                _c(
+                                                  "span",
+                                                  {
+                                                    staticClass: "close",
+                                                    on: {
+                                                      click: function($event) {
+                                                        return _vm.removeTag(
+                                                          index
+                                                        )
+                                                      }
+                                                    }
+                                                  },
+                                                  [_vm._v("X")]
+                                                ),
+                                                _vm._v(
+                                                  "\n                                                    " +
+                                                    _vm._s(tag.value) +
+                                                    "\n                                                "
+                                                )
+                                              ]
+                                            )
+                                          }),
+                                          0
+                                        )
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    option.optionSelected == "material"
+                                      ? _c(
+                                          "div",
+                                          _vm._l(_vm.materialTags, function(
+                                            tag,
+                                            index
+                                          ) {
+                                            return _c(
+                                              "div",
+                                              {
+                                                key: index,
+                                                staticClass: "tags"
+                                              },
+                                              [
+                                                _c(
+                                                  "span",
+                                                  {
+                                                    staticClass: "close",
+                                                    on: {
+                                                      click: function($event) {
+                                                        return _vm.removeTag(
+                                                          index
+                                                        )
+                                                      }
+                                                    }
+                                                  },
+                                                  [_vm._v("X")]
+                                                ),
+                                                _vm._v(
+                                                  "\n                                                    " +
+                                                    _vm._s(tag.value) +
+                                                    "\n                                                "
+                                                )
+                                              ]
+                                            )
+                                          }),
+                                          0
+                                        )
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        type: "text",
+                                        name:
+                                          option.optionSelected == "size"
+                                            ? "size"
+                                            : option.optionSelected == "color"
+                                            ? "color"
+                                            : option.optionSelected ==
+                                              "material"
+                                            ? "material"
+                                            : "",
+                                        placeholder:
+                                          "Separate options with a comma"
+                                      },
+                                      on: {
+                                        keydown: [
+                                          function($event) {
+                                            if (
+                                              !$event.type.indexOf("key") &&
+                                              _vm._k(
+                                                $event.keyCode,
+                                                "enter",
+                                                13,
+                                                $event.key,
+                                                "Enter"
+                                              )
+                                            ) {
+                                              return null
+                                            }
+                                            return _vm.addTag($event)
+                                          },
+                                          function($event) {
+                                            if (
+                                              !$event.type.indexOf("key") &&
+                                              $event.keyCode !== 188
+                                            ) {
+                                              return null
+                                            }
+                                            return _vm.addTag($event)
+                                          },
+                                          function($event) {
+                                            if (
+                                              !$event.type.indexOf("key") &&
+                                              _vm._k(
+                                                $event.keyCode,
+                                                "delete",
+                                                [8, 46],
+                                                $event.key,
+                                                ["Backspace", "Delete", "Del"]
+                                              )
+                                            ) {
+                                              return null
+                                            }
+                                            return _vm.removeLastTag($event)
+                                          }
+                                        ]
+                                      }
+                                    })
+                                  ])
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("hr")
+                            ]
+                          )
                         }),
                         _vm._v(" "),
                         _c(
@@ -38618,7 +39002,12 @@ var render = function() {
                     )
                   ])
                 : _vm._e()
-            ])
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "btn btn-primary float-right mt-2 col-4",
+              attrs: { type: "submit", value: "Save" }
+            })
           ])
         ]
       ),
@@ -38629,41 +39018,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row m-2" }, [
-      _c(
-        "select",
-        { staticClass: "form-control col-2", attrs: { name: "options" } },
-        [
-          _c("option", { attrs: { value: "size" } }, [_vm._v("Size")]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "color", selected: "" } }, [
-            _vm._v("Color")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "material" } }, [_vm._v("Material")])
-        ]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-9 ml-2" }, [
-        _c("div"),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            name: "",
-            placeholder: "Separate options with a comma"
-          }
-        })
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
