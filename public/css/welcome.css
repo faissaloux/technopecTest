@@ -1,0 +1,78 @@
+* {
+  margin: 0;
+}
+
+div.content {
+  height: 100vh;
+  background: url(/images/welcome.jpg?e1c25fd288abd65b0f75b25433d70215);
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+div.content div.overlay {
+  height: 100vh;
+  background-color: rgba(57, 62, 70, 0.6);
+}
+
+div.content div.overlay div.welcomeCont {
+  margin-top: 200px;
+  text-align: center;
+}
+
+div.content div.overlay div.welcomeCont h2 {
+  font-size: 60px;
+  color: #FFF;
+}
+
+div.content div.overlay div.welcomeCont div form button {
+  font-family: "Lato", sans-serif;
+  color: #222;
+  height: 50px;
+  width: 300px;
+  margin-right: 40px;
+  border: none;
+  outline: none;
+  background: #FFF;
+}
+
+div.content div.overlay div.welcomeCont div form button:hover {
+  background: #999;
+}
+
+div.left {
+  position: fixed;
+  background-color: #222;
+  height: 100vh;
+  width: 300px;
+}
+
+div.left div.buttons {
+  padding-top: 50px;
+}
+
+div.left div.buttons button {
+  width: 100%;
+  height: 40px;
+  background-color: #666;
+  color: #FFF;
+  border: none;
+  outline: none;
+}
+
+div.left div.buttons button:not(first-of-type) {
+  margin-bottom: 10px;
+}
+
+div.left div.buttons button.active {
+  background-color: #FFF;
+  color: #222;
+}
+
+div.left div.buttons button:hover {
+  background-color: #999;
+}
+
+div.right {
+  margin-left: 300px;
+}
+
