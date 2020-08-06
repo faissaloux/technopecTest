@@ -2093,6 +2093,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2101,23 +2137,14 @@ __webpack_require__.r(__webpack_exports__);
       description: '',
       color: [],
       size: [],
+      sizeList: [],
       material: [],
-      quantity: '',
-      sQuantity: [],
-      cQuantity: [],
-      mQuantity: [],
-      scQuantity: [],
-      mcQuantity: [],
-      scmQuantity: [],
-      smQuantity: [],
-      sPrice: [],
-      cPrice: [],
-      mPrice: [],
-      scPrice: [],
-      mcPrice: [],
-      scmPrice: [],
-      smPrice: [],
-      msg: '',
+      price: [],
+      quantity: [],
+      priceList: [],
+      quantityList: [],
+      errorMsg: '',
+      variants: [],
       hasVariants: false,
       options: [{
         option: 1,
@@ -2138,6 +2165,23 @@ __webpack_require__.r(__webpack_exports__);
         option: this.options.length + 1
       });
       this.options[this.options.length - 1].optionSelected = 'color';
+    },
+    idExists: function idExists(option) {
+      return document.body.contains(document.getElementById(option)) || null;
+    },
+    fillVariant: function fillVariant(i, index) {
+      var sizeVal = this.idExists('size' + i * 10 + index) && document.getElementById('size' + i * 10 + index).innerHTML;
+      var colorVal = this.idExists('color' + i * 10 + index) && document.getElementById('color' + i * 10 + index).innerHTML;
+      var materialVal = this.idExists('material' + i * 10 + index) && document.getElementById('material' + i * 10 + index).innerHTML; // variants
+
+      this.variants.push({
+        id: i * 10 + index
+      });
+      this.variants[this.variants.length - 1].price = this.priceList[this.variants.length - 1];
+      this.variants[this.variants.length - 1].quantity = this.quantityList[this.variants.length - 1];
+      this.variants[this.variants.length - 1].size = sizeVal;
+      this.variants[this.variants.length - 1].color = colorVal;
+      this.variants[this.variants.length - 1].material = materialVal;
     },
     removeOption: function removeOption(index, option) {
       var f = [];
@@ -2267,29 +2311,10 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/cart/create', {
         title: this.title,
         description: this.description,
-        colors: this.colorTags,
-        sizes: this.sizeTags,
-        materials: this.materialTags,
-        sQuantity: this.sQuantity,
-        cQuantity: this.cQuantity,
-        mQuantity: this.mQuantity,
-        scQuantity: this.scQuantity,
-        mcQuantity: this.mcQuantity,
-        scmQuantity: this.scmQuantity,
-        smQuantity: this.smQuantity,
-        sPrice: this.sPrice,
-        cPrice: this.cPrice,
-        mPrice: this.mPrice,
-        scPrice: this.scPrice,
-        mcPrice: this.mcPrice,
-        scmPrice: this.scmPrice,
-        smPrice: this.smPrice
-      }).then(function (response) {
-        _this.msg = "Product added successfully!";
-        console.log(response.data);
-      }); // .catch( error =>{
-      //     this.msg = "Check if any field is empty!"
-      // })
+        variants: this.variants
+      })["catch"](function (error) {
+        _this.errorMsg = "Check if any field is empty!";
+      });
     }
   },
   watch: {
@@ -2320,6 +2345,16 @@ __webpack_require__.r(__webpack_exports__);
         option: 1,
         optionSelected: 'size'
       }];
+    },
+    price: function price() {
+      this.priceList = this.price.filter(function (p) {
+        return Number.isInteger(parseInt(p));
+      });
+    },
+    quantity: function quantity() {
+      this.quantityList = this.quantity.filter(function (p) {
+        return Number.isInteger(parseInt(p));
+      });
     }
   }
 });
@@ -6918,7 +6953,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".pointer[data-v-75da6b46] {\n  cursor: pointer;\n}\ntextarea[data-v-75da6b46] {\n  resize: none;\n  height: 200px;\n}\n.tagContainer[data-v-75da6b46] {\n  width: 100%;\n  border: 1px solid #eee;\n  font-size: 0.9em;\n  padding: 0 10px;\n}\n.tagContainer > input[data-v-75da6b46] {\n  border: none;\n  outline: none;\n  background: none;\n  font-size: 0.9em;\n  line-height: 50px;\n}\n.tags[data-v-75da6b46] {\n  height: 30px;\n  float: left;\n  margin-right: 10px;\n  background-color: #ddd;\n  margin-top: 5px;\n  line-height: 30px;\n  padding: 0 5px;\n  border-radius: 5px;\n}\n.tags span.close[data-v-75da6b46] {\n  cursor: pointer;\n  font-size: 1rem;\n  line-height: 30px;\n  margin-left: 5px;\n}", ""]);
+exports.push([module.i, "div.message[data-v-75da6b46] {\n  margin-left: -10px;\n}\ndiv.message p[data-v-75da6b46] {\n  background-color: #ED5B53;\n  color: #FFF;\n  text-align: center;\n}\n.pointer[data-v-75da6b46] {\n  cursor: pointer;\n}\ntextarea[data-v-75da6b46] {\n  resize: none;\n  height: 200px;\n}\n.tagContainer[data-v-75da6b46] {\n  width: 100%;\n  border: 1px solid #eee;\n  font-size: 0.9em;\n  padding: 0 10px;\n}\n.tagContainer > input[data-v-75da6b46] {\n  border: none;\n  outline: none;\n  background: none;\n  font-size: 0.9em;\n  line-height: 50px;\n}\n.tags[data-v-75da6b46] {\n  height: 30px;\n  float: left;\n  margin-right: 10px;\n  background-color: #ddd;\n  margin-top: 5px;\n  line-height: 30px;\n  padding: 0 5px;\n  border-radius: 5px;\n}\n.tags span.close[data-v-75da6b46] {\n  cursor: pointer;\n  font-size: 1rem;\n  line-height: 30px;\n  margin-left: 5px;\n}", ""]);
 
 // exports
 
@@ -38777,6 +38812,10 @@ var render = function() {
           }
         },
         [
+          _c("div", { staticClass: "message" }, [
+            _vm.errorMsg ? _c("p", [_vm._v(_vm._s(_vm.errorMsg))]) : _vm._e()
+          ]),
+          _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
             _c("input", {
               attrs: { type: "hidden", name: "_token" },
@@ -39229,75 +39268,86 @@ var render = function() {
                                           sizeTag,
                                           index
                                         ) {
-                                          return _c("div", { key: index }, [
-                                            _c(
-                                              "span",
-                                              { staticClass: "col-md-4" },
-                                              [_vm._v(_vm._s(sizeTag.value))]
-                                            ),
-                                            _vm._v(" "),
-                                            _c("input", {
-                                              directives: [
-                                                {
-                                                  name: "model",
-                                                  rawName: "v-model",
-                                                  value: _vm.sPrice[index],
-                                                  expression: "sPrice[index]"
-                                                }
-                                              ],
-                                              staticClass: "col-md-4",
-                                              attrs: {
-                                                type: "text",
-                                                placeholder: "Price"
-                                              },
-                                              domProps: {
-                                                value: _vm.sPrice[index]
-                                              },
-                                              on: {
-                                                input: function($event) {
-                                                  if ($event.target.composing) {
-                                                    return
+                                          return _c(
+                                            "div",
+                                            { key: index, staticClass: "row" },
+                                            [
+                                              _c(
+                                                "span",
+                                                { staticClass: "col-md-4" },
+                                                [_vm._v(_vm._s(sizeTag.value))]
+                                              ),
+                                              _vm._v(" "),
+                                              _c("input", {
+                                                directives: [
+                                                  {
+                                                    name: "model",
+                                                    rawName: "v-model",
+                                                    value: _vm.price[index],
+                                                    expression: "price[index]"
                                                   }
-                                                  _vm.$set(
-                                                    _vm.sPrice,
-                                                    index,
-                                                    $event.target.value
-                                                  )
-                                                }
-                                              }
-                                            }),
-                                            _vm._v(" "),
-                                            _c("input", {
-                                              directives: [
-                                                {
-                                                  name: "model",
-                                                  rawName: "v-model",
-                                                  value: _vm.sQuantity[index],
-                                                  expression: "sQuantity[index]"
-                                                }
-                                              ],
-                                              staticClass: "col-md-4",
-                                              attrs: {
-                                                type: "number",
-                                                placeholder: "Quantity"
-                                              },
-                                              domProps: {
-                                                value: _vm.sQuantity[index]
-                                              },
-                                              on: {
-                                                input: function($event) {
-                                                  if ($event.target.composing) {
-                                                    return
+                                                ],
+                                                staticClass:
+                                                  "form-control col-md-4",
+                                                attrs: {
+                                                  type: "text",
+                                                  placeholder: "Price"
+                                                },
+                                                domProps: {
+                                                  value: _vm.price[index]
+                                                },
+                                                on: {
+                                                  input: function($event) {
+                                                    if (
+                                                      $event.target.composing
+                                                    ) {
+                                                      return
+                                                    }
+                                                    _vm.$set(
+                                                      _vm.price,
+                                                      index,
+                                                      $event.target.value
+                                                    )
                                                   }
-                                                  _vm.$set(
-                                                    _vm.sQuantity,
-                                                    index,
-                                                    $event.target.value
-                                                  )
                                                 }
-                                              }
-                                            })
-                                          ])
+                                              }),
+                                              _vm._v(" "),
+                                              _c("input", {
+                                                directives: [
+                                                  {
+                                                    name: "model",
+                                                    rawName: "v-model",
+                                                    value: _vm.quantity[index],
+                                                    expression:
+                                                      "quantity[index]"
+                                                  }
+                                                ],
+                                                staticClass:
+                                                  "form-control col-md-4",
+                                                attrs: {
+                                                  type: "number",
+                                                  placeholder: "Quantity"
+                                                },
+                                                domProps: {
+                                                  value: _vm.quantity[index]
+                                                },
+                                                on: {
+                                                  input: function($event) {
+                                                    if (
+                                                      $event.target.composing
+                                                    ) {
+                                                      return
+                                                    }
+                                                    _vm.$set(
+                                                      _vm.quantity,
+                                                      index,
+                                                      $event.target.value
+                                                    )
+                                                  }
+                                                }
+                                              })
+                                            ]
+                                          )
                                         }),
                                         0
                                       )
@@ -39308,75 +39358,86 @@ var render = function() {
                                           colorTag,
                                           index
                                         ) {
-                                          return _c("div", { key: index }, [
-                                            _c(
-                                              "span",
-                                              { staticClass: "col-md-4" },
-                                              [_vm._v(_vm._s(colorTag.value))]
-                                            ),
-                                            _vm._v(" "),
-                                            _c("input", {
-                                              directives: [
-                                                {
-                                                  name: "model",
-                                                  rawName: "v-model",
-                                                  value: _vm.cPrice[index],
-                                                  expression: "cPrice[index]"
-                                                }
-                                              ],
-                                              staticClass: "col-md-4",
-                                              attrs: {
-                                                type: "text",
-                                                placeholder: "Price"
-                                              },
-                                              domProps: {
-                                                value: _vm.cPrice[index]
-                                              },
-                                              on: {
-                                                input: function($event) {
-                                                  if ($event.target.composing) {
-                                                    return
+                                          return _c(
+                                            "div",
+                                            { key: index, staticClass: "row" },
+                                            [
+                                              _c(
+                                                "span",
+                                                { staticClass: "col-md-4" },
+                                                [_vm._v(_vm._s(colorTag.value))]
+                                              ),
+                                              _vm._v(" "),
+                                              _c("input", {
+                                                directives: [
+                                                  {
+                                                    name: "model",
+                                                    rawName: "v-model",
+                                                    value: _vm.price[index],
+                                                    expression: "price[index]"
                                                   }
-                                                  _vm.$set(
-                                                    _vm.cPrice,
-                                                    index,
-                                                    $event.target.value
-                                                  )
-                                                }
-                                              }
-                                            }),
-                                            _vm._v(" "),
-                                            _c("input", {
-                                              directives: [
-                                                {
-                                                  name: "model",
-                                                  rawName: "v-model",
-                                                  value: _vm.cQuantity[index],
-                                                  expression: "cQuantity[index]"
-                                                }
-                                              ],
-                                              staticClass: "col-md-4",
-                                              attrs: {
-                                                type: "number",
-                                                placeholder: "Quantity"
-                                              },
-                                              domProps: {
-                                                value: _vm.cQuantity[index]
-                                              },
-                                              on: {
-                                                input: function($event) {
-                                                  if ($event.target.composing) {
-                                                    return
+                                                ],
+                                                staticClass:
+                                                  "form-control col-md-4",
+                                                attrs: {
+                                                  type: "text",
+                                                  placeholder: "Price"
+                                                },
+                                                domProps: {
+                                                  value: _vm.price[index]
+                                                },
+                                                on: {
+                                                  input: function($event) {
+                                                    if (
+                                                      $event.target.composing
+                                                    ) {
+                                                      return
+                                                    }
+                                                    _vm.$set(
+                                                      _vm.price,
+                                                      index,
+                                                      $event.target.value
+                                                    )
                                                   }
-                                                  _vm.$set(
-                                                    _vm.cQuantity,
-                                                    index,
-                                                    $event.target.value
-                                                  )
                                                 }
-                                              }
-                                            })
-                                          ])
+                                              }),
+                                              _vm._v(" "),
+                                              _c("input", {
+                                                directives: [
+                                                  {
+                                                    name: "model",
+                                                    rawName: "v-model",
+                                                    value: _vm.quantity[index],
+                                                    expression:
+                                                      "quantity[index]"
+                                                  }
+                                                ],
+                                                staticClass:
+                                                  "form-control col-md-4",
+                                                attrs: {
+                                                  type: "number",
+                                                  placeholder: "Quantity"
+                                                },
+                                                domProps: {
+                                                  value: _vm.quantity[index]
+                                                },
+                                                on: {
+                                                  input: function($event) {
+                                                    if (
+                                                      $event.target.composing
+                                                    ) {
+                                                      return
+                                                    }
+                                                    _vm.$set(
+                                                      _vm.quantity,
+                                                      index,
+                                                      $event.target.value
+                                                    )
+                                                  }
+                                                }
+                                              })
+                                            ]
+                                          )
                                         }),
                                         0
                                       )
@@ -39387,79 +39448,90 @@ var render = function() {
                                           materialTag,
                                           index
                                         ) {
-                                          return _c("div", { key: index }, [
-                                            _c(
-                                              "span",
-                                              { staticClass: "col-md-4" },
-                                              [
-                                                _vm._v(
-                                                  _vm._s(materialTag.value)
-                                                )
-                                              ]
-                                            ),
-                                            _vm._v(" "),
-                                            _c("input", {
-                                              directives: [
-                                                {
-                                                  name: "model",
-                                                  rawName: "v-model",
-                                                  value: _vm.mPrice[index],
-                                                  expression: "mPrice[index]"
-                                                }
-                                              ],
-                                              staticClass: "col-md-4",
-                                              attrs: {
-                                                type: "text",
-                                                placeholder: "Price"
-                                              },
-                                              domProps: {
-                                                value: _vm.mPrice[index]
-                                              },
-                                              on: {
-                                                input: function($event) {
-                                                  if ($event.target.composing) {
-                                                    return
-                                                  }
-                                                  _vm.$set(
-                                                    _vm.mPrice,
-                                                    index,
-                                                    $event.target.value
+                                          return _c(
+                                            "div",
+                                            { key: index, staticClass: "row" },
+                                            [
+                                              _c(
+                                                "span",
+                                                { staticClass: "col-md-4" },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(materialTag.value)
                                                   )
-                                                }
-                                              }
-                                            }),
-                                            _vm._v(" "),
-                                            _c("input", {
-                                              directives: [
-                                                {
-                                                  name: "model",
-                                                  rawName: "v-model",
-                                                  value: _vm.mQuantity[index],
-                                                  expression: "mQuantity[index]"
-                                                }
-                                              ],
-                                              staticClass: "col-md-4",
-                                              attrs: {
-                                                type: "number",
-                                                placeholder: "Quantity"
-                                              },
-                                              domProps: {
-                                                value: _vm.mQuantity[index]
-                                              },
-                                              on: {
-                                                input: function($event) {
-                                                  if ($event.target.composing) {
-                                                    return
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c("input", {
+                                                directives: [
+                                                  {
+                                                    name: "model",
+                                                    rawName: "v-model",
+                                                    value: _vm.price[index],
+                                                    expression: "price[index]"
                                                   }
-                                                  _vm.$set(
-                                                    _vm.mQuantity,
-                                                    index,
-                                                    $event.target.value
-                                                  )
+                                                ],
+                                                staticClass:
+                                                  "form-control col-md-4",
+                                                attrs: {
+                                                  type: "text",
+                                                  placeholder: "Price"
+                                                },
+                                                domProps: {
+                                                  value: _vm.price[index]
+                                                },
+                                                on: {
+                                                  input: function($event) {
+                                                    if (
+                                                      $event.target.composing
+                                                    ) {
+                                                      return
+                                                    }
+                                                    _vm.$set(
+                                                      _vm.price,
+                                                      index,
+                                                      $event.target.value
+                                                    )
+                                                  }
                                                 }
-                                              }
-                                            })
-                                          ])
+                                              }),
+                                              _vm._v(" "),
+                                              _c("input", {
+                                                directives: [
+                                                  {
+                                                    name: "model",
+                                                    rawName: "v-model",
+                                                    value: _vm.quantity[index],
+                                                    expression:
+                                                      "quantity[index]"
+                                                  }
+                                                ],
+                                                staticClass:
+                                                  "form-control col-md-4",
+                                                attrs: {
+                                                  type: "number",
+                                                  placeholder: "Quantity"
+                                                },
+                                                domProps: {
+                                                  value: _vm.quantity[index]
+                                                },
+                                                on: {
+                                                  input: function($event) {
+                                                    if (
+                                                      $event.target.composing
+                                                    ) {
+                                                      return
+                                                    }
+                                                    _vm.$set(
+                                                      _vm.quantity,
+                                                      index,
+                                                      $event.target.value
+                                                    )
+                                                  }
+                                                }
+                                              })
+                                            ]
+                                          )
                                         }),
                                         0
                                       )
@@ -39487,7 +39559,10 @@ var render = function() {
                                                     function(colorTag, index) {
                                                       return _c(
                                                         "div",
-                                                        { key: index },
+                                                        {
+                                                          key: index,
+                                                          staticClass: "row"
+                                                        },
                                                         _vm._l(
                                                           _vm.materialTags,
                                                           function(
@@ -39496,7 +39571,11 @@ var render = function() {
                                                           ) {
                                                             return _c(
                                                               "div",
-                                                              { key: index },
+                                                              {
+                                                                key: index,
+                                                                staticClass:
+                                                                  "row"
+                                                              },
                                                               [
                                                                 _c(
                                                                   "span",
@@ -39530,15 +39609,17 @@ var render = function() {
                                                                         "v-model",
                                                                       value:
                                                                         _vm
-                                                                          .scmPrice[
-                                                                          index
+                                                                          .price[
+                                                                          _vm.i *
+                                                                            10 +
+                                                                            index
                                                                         ],
                                                                       expression:
-                                                                        "scmPrice[index]"
+                                                                        "price[i*10+index]"
                                                                     }
                                                                   ],
                                                                   staticClass:
-                                                                    "col-md-4",
+                                                                    "form-control col-md-4",
                                                                   attrs: {
                                                                     type:
                                                                       "text",
@@ -39547,9 +39628,10 @@ var render = function() {
                                                                   },
                                                                   domProps: {
                                                                     value:
-                                                                      _vm
-                                                                        .scmPrice[
-                                                                        index
+                                                                      _vm.price[
+                                                                        _vm.i *
+                                                                          10 +
+                                                                          index
                                                                       ]
                                                                   },
                                                                   on: {
@@ -39564,8 +39646,10 @@ var render = function() {
                                                                         return
                                                                       }
                                                                       _vm.$set(
-                                                                        _vm.scmPrice,
-                                                                        index,
+                                                                        _vm.price,
+                                                                        _vm.i *
+                                                                          10 +
+                                                                          index,
                                                                         $event
                                                                           .target
                                                                           .value
@@ -39583,15 +39667,17 @@ var render = function() {
                                                                         "v-model",
                                                                       value:
                                                                         _vm
-                                                                          .scmQuantity[
-                                                                          index
+                                                                          .quantity[
+                                                                          _vm.i *
+                                                                            10 +
+                                                                            index
                                                                         ],
                                                                       expression:
-                                                                        "scmQuantity[index]"
+                                                                        "quantity[i*10+index]"
                                                                     }
                                                                   ],
                                                                   staticClass:
-                                                                    "col-md-4",
+                                                                    "form-control col-md-4",
                                                                   attrs: {
                                                                     type:
                                                                       "number",
@@ -39601,8 +39687,10 @@ var render = function() {
                                                                   domProps: {
                                                                     value:
                                                                       _vm
-                                                                        .scmQuantity[
-                                                                        index
+                                                                        .quantity[
+                                                                        _vm.i *
+                                                                          10 +
+                                                                          index
                                                                       ]
                                                                   },
                                                                   on: {
@@ -39617,8 +39705,10 @@ var render = function() {
                                                                         return
                                                                       }
                                                                       _vm.$set(
-                                                                        _vm.scmQuantity,
-                                                                        index,
+                                                                        _vm.quantity,
+                                                                        _vm.i *
+                                                                          10 +
+                                                                          index,
                                                                         $event
                                                                           .target
                                                                           .value
@@ -39643,12 +39733,12 @@ var render = function() {
                                               "div",
                                               _vm._l(_vm.sizeTags, function(
                                                 sizeTag,
-                                                index
+                                                i
                                               ) {
                                                 return _c(
                                                   "div",
                                                   {
-                                                    key: index,
+                                                    key: i,
                                                     staticClass: "row"
                                                   },
                                                   _vm._l(
@@ -39656,7 +39746,10 @@ var render = function() {
                                                     function(colorTag, index) {
                                                       return _c(
                                                         "div",
-                                                        { key: index },
+                                                        {
+                                                          key: index,
+                                                          staticClass: "row"
+                                                        },
                                                         [
                                                           _c(
                                                             "span",
@@ -39665,14 +39758,44 @@ var render = function() {
                                                                 "col-md-4"
                                                             },
                                                             [
-                                                              _vm._v(
-                                                                _vm._s(
-                                                                  sizeTag.value
-                                                                ) +
-                                                                  "/" +
-                                                                  _vm._s(
-                                                                    colorTag.value
+                                                              _c(
+                                                                "span",
+                                                                {
+                                                                  attrs: {
+                                                                    id:
+                                                                      "size" +
+                                                                      i * 10 +
+                                                                      index
+                                                                  }
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    _vm._s(
+                                                                      sizeTag.value
+                                                                    )
                                                                   )
+                                                                ]
+                                                              ),
+                                                              _vm._v(
+                                                                "/\n                                                        "
+                                                              ),
+                                                              _c(
+                                                                "span",
+                                                                {
+                                                                  attrs: {
+                                                                    id:
+                                                                      "color" +
+                                                                      i * 10 +
+                                                                      index
+                                                                  }
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    _vm._s(
+                                                                      colorTag.value
+                                                                    )
+                                                                  )
+                                                                ]
                                                               )
                                                             ]
                                                           ),
@@ -39684,15 +39807,16 @@ var render = function() {
                                                                 rawName:
                                                                   "v-model",
                                                                 value:
-                                                                  _vm.scPrice[
-                                                                    index
+                                                                  _vm.price[
+                                                                    i * 10 +
+                                                                      index
                                                                   ],
                                                                 expression:
-                                                                  "scPrice[index]"
+                                                                  "price[i*10+index]"
                                                               }
                                                             ],
                                                             staticClass:
-                                                              "col-md-4",
+                                                              "form-control col-md-4",
                                                             attrs: {
                                                               type: "text",
                                                               placeholder:
@@ -39700,8 +39824,8 @@ var render = function() {
                                                             },
                                                             domProps: {
                                                               value:
-                                                                _vm.scPrice[
-                                                                  index
+                                                                _vm.price[
+                                                                  i * 10 + index
                                                                 ]
                                                             },
                                                             on: {
@@ -39715,8 +39839,9 @@ var render = function() {
                                                                   return
                                                                 }
                                                                 _vm.$set(
-                                                                  _vm.scPrice,
-                                                                  index,
+                                                                  _vm.price,
+                                                                  i * 10 +
+                                                                    index,
                                                                   $event.target
                                                                     .value
                                                                 )
@@ -39731,16 +39856,16 @@ var render = function() {
                                                                 rawName:
                                                                   "v-model",
                                                                 value:
-                                                                  _vm
-                                                                    .scQuantity[
-                                                                    index
+                                                                  _vm.quantity[
+                                                                    i * 10 +
+                                                                      index
                                                                   ],
                                                                 expression:
-                                                                  "scQuantity[index]"
+                                                                  "quantity[i*10+index]"
                                                               }
                                                             ],
                                                             staticClass:
-                                                              "col-md-4",
+                                                              "form-control col-md-4",
                                                             attrs: {
                                                               type: "number",
                                                               placeholder:
@@ -39748,11 +39873,19 @@ var render = function() {
                                                             },
                                                             domProps: {
                                                               value:
-                                                                _vm.scQuantity[
-                                                                  index
+                                                                _vm.quantity[
+                                                                  i * 10 + index
                                                                 ]
                                                             },
                                                             on: {
+                                                              blur: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.fillVariant(
+                                                                  i,
+                                                                  index
+                                                                )
+                                                              },
                                                               input: function(
                                                                 $event
                                                               ) {
@@ -39763,8 +39896,9 @@ var render = function() {
                                                                   return
                                                                 }
                                                                 _vm.$set(
-                                                                  _vm.scQuantity,
-                                                                  index,
+                                                                  _vm.quantity,
+                                                                  i * 10 +
+                                                                    index,
                                                                   $event.target
                                                                     .value
                                                                 )
@@ -39786,99 +39920,159 @@ var render = function() {
                                         "div",
                                         _vm._l(_vm.materialTags, function(
                                           materialTag,
-                                          index
+                                          i
                                         ) {
                                           return _c(
                                             "div",
-                                            { key: index, staticClass: "row" },
+                                            { key: i, staticClass: "row" },
                                             _vm._l(_vm.colorTags, function(
                                               colorTag,
                                               index
                                             ) {
-                                              return _c("div", { key: index }, [
-                                                _c(
-                                                  "span",
-                                                  { staticClass: "col-md-4" },
-                                                  [
-                                                    _vm._v(
-                                                      _vm._s(
-                                                        materialTag.value
-                                                      ) +
-                                                        "/" +
-                                                        _vm._s(colorTag.value)
-                                                    )
-                                                  ]
-                                                ),
-                                                _vm._v(" "),
-                                                _c("input", {
-                                                  directives: [
-                                                    {
-                                                      name: "model",
-                                                      rawName: "v-model",
-                                                      value: _vm.mcPrice[index],
-                                                      expression:
-                                                        "mcPrice[index]"
-                                                    }
-                                                  ],
-                                                  staticClass: "col-md-4",
-                                                  attrs: {
-                                                    type: "text",
-                                                    placeholder: "Price"
-                                                  },
-                                                  domProps: {
-                                                    value: _vm.mcPrice[index]
-                                                  },
-                                                  on: {
-                                                    input: function($event) {
-                                                      if (
-                                                        $event.target.composing
-                                                      ) {
-                                                        return
-                                                      }
-                                                      _vm.$set(
-                                                        _vm.mcPrice,
-                                                        index,
-                                                        $event.target.value
+                                              return _c(
+                                                "div",
+                                                {
+                                                  key: index,
+                                                  staticClass: "row"
+                                                },
+                                                [
+                                                  _c(
+                                                    "span",
+                                                    { staticClass: "col-md-4" },
+                                                    [
+                                                      _c(
+                                                        "span",
+                                                        {
+                                                          attrs: {
+                                                            id:
+                                                              "material" +
+                                                              i * 10 +
+                                                              index
+                                                          }
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            _vm._s(
+                                                              materialTag.value
+                                                            )
+                                                          )
+                                                        ]
+                                                      ),
+                                                      _vm._v(
+                                                        "/\n                                                    "
+                                                      ),
+                                                      _c(
+                                                        "span",
+                                                        {
+                                                          attrs: {
+                                                            id:
+                                                              "color" +
+                                                              i * 10 +
+                                                              index
+                                                          }
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            _vm._s(
+                                                              colorTag.value
+                                                            )
+                                                          )
+                                                        ]
                                                       )
-                                                    }
-                                                  }
-                                                }),
-                                                _vm._v(" "),
-                                                _c("input", {
-                                                  directives: [
-                                                    {
-                                                      name: "model",
-                                                      rawName: "v-model",
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c("input", {
+                                                    directives: [
+                                                      {
+                                                        name: "model",
+                                                        rawName: "v-model",
+                                                        value:
+                                                          _vm.price[
+                                                            i * 10 + index
+                                                          ],
+                                                        expression:
+                                                          "price[i*10+index]"
+                                                      }
+                                                    ],
+                                                    staticClass:
+                                                      "form-control col-md-4",
+                                                    attrs: {
+                                                      type: "text",
+                                                      placeholder: "Price"
+                                                    },
+                                                    domProps: {
                                                       value:
-                                                        _vm.mcQuantity[index],
-                                                      expression:
-                                                        "mcQuantity[index]"
-                                                    }
-                                                  ],
-                                                  staticClass: "col-md-4",
-                                                  attrs: {
-                                                    type: "number",
-                                                    placeholder: "Quantity"
-                                                  },
-                                                  domProps: {
-                                                    value: _vm.mcQuantity[index]
-                                                  },
-                                                  on: {
-                                                    input: function($event) {
-                                                      if (
-                                                        $event.target.composing
-                                                      ) {
-                                                        return
+                                                        _vm.price[
+                                                          i * 10 + index
+                                                        ]
+                                                    },
+                                                    on: {
+                                                      input: function($event) {
+                                                        if (
+                                                          $event.target
+                                                            .composing
+                                                        ) {
+                                                          return
+                                                        }
+                                                        _vm.$set(
+                                                          _vm.price,
+                                                          i * 10 + index,
+                                                          $event.target.value
+                                                        )
                                                       }
-                                                      _vm.$set(
-                                                        _vm.mcQuantity,
-                                                        index,
-                                                        $event.target.value
-                                                      )
                                                     }
-                                                  }
-                                                })
-                                              ])
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c("input", {
+                                                    directives: [
+                                                      {
+                                                        name: "model",
+                                                        rawName: "v-model",
+                                                        value:
+                                                          _vm.quantity[
+                                                            i * 10 + index
+                                                          ],
+                                                        expression:
+                                                          "quantity[i*10+index]"
+                                                      }
+                                                    ],
+                                                    staticClass:
+                                                      "form-control col-md-4",
+                                                    attrs: {
+                                                      type: "number",
+                                                      placeholder: "Quantity"
+                                                    },
+                                                    domProps: {
+                                                      value:
+                                                        _vm.quantity[
+                                                          i * 10 + index
+                                                        ]
+                                                    },
+                                                    on: {
+                                                      blur: function($event) {
+                                                        return _vm.fillVariant(
+                                                          i,
+                                                          index
+                                                        )
+                                                      },
+                                                      input: function($event) {
+                                                        if (
+                                                          $event.target
+                                                            .composing
+                                                        ) {
+                                                          return
+                                                        }
+                                                        _vm.$set(
+                                                          _vm.quantity,
+                                                          i * 10 + index,
+                                                          $event.target.value
+                                                        )
+                                                      }
+                                                    }
+                                                  })
+                                                ]
+                                              )
                                             }),
                                             0
                                           )
@@ -39894,99 +40088,159 @@ var render = function() {
                                         "div",
                                         _vm._l(_vm.sizeTags, function(
                                           sizeTag,
-                                          index
+                                          i
                                         ) {
                                           return _c(
                                             "div",
-                                            { key: index, staticClass: "row" },
+                                            { key: i, staticClass: "row" },
                                             _vm._l(_vm.materialTags, function(
                                               materialTag,
                                               index
                                             ) {
-                                              return _c("div", { key: index }, [
-                                                _c(
-                                                  "span",
-                                                  { staticClass: "col-md-4" },
-                                                  [
-                                                    _vm._v(
-                                                      _vm._s(sizeTag.value) +
-                                                        "/" +
-                                                        _vm._s(
-                                                          materialTag.value
-                                                        )
-                                                    )
-                                                  ]
-                                                ),
-                                                _vm._v(" "),
-                                                _c("input", {
-                                                  directives: [
-                                                    {
-                                                      name: "model",
-                                                      rawName: "v-model",
-                                                      value: _vm.smPrice[index],
-                                                      expression:
-                                                        "smPrice[index]"
-                                                    }
-                                                  ],
-                                                  staticClass: "col-md-4",
-                                                  attrs: {
-                                                    type: "text",
-                                                    placeholder: "Price"
-                                                  },
-                                                  domProps: {
-                                                    value: _vm.smPrice[index]
-                                                  },
-                                                  on: {
-                                                    input: function($event) {
-                                                      if (
-                                                        $event.target.composing
-                                                      ) {
-                                                        return
-                                                      }
-                                                      _vm.$set(
-                                                        _vm.smPrice,
-                                                        index,
-                                                        $event.target.value
+                                              return _c(
+                                                "div",
+                                                {
+                                                  key: index,
+                                                  staticClass: "row"
+                                                },
+                                                [
+                                                  _c(
+                                                    "span",
+                                                    { staticClass: "col-md-4" },
+                                                    [
+                                                      _c(
+                                                        "span",
+                                                        {
+                                                          attrs: {
+                                                            id:
+                                                              "size" +
+                                                              i * 10 +
+                                                              index
+                                                          }
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            _vm._s(
+                                                              sizeTag.value
+                                                            )
+                                                          )
+                                                        ]
+                                                      ),
+                                                      _vm._v(
+                                                        "/\n                                                    "
+                                                      ),
+                                                      _c(
+                                                        "span",
+                                                        {
+                                                          attrs: {
+                                                            id:
+                                                              "material" +
+                                                              i * 10 +
+                                                              index
+                                                          }
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            _vm._s(
+                                                              materialTag.value
+                                                            )
+                                                          )
+                                                        ]
                                                       )
-                                                    }
-                                                  }
-                                                }),
-                                                _vm._v(" "),
-                                                _c("input", {
-                                                  directives: [
-                                                    {
-                                                      name: "model",
-                                                      rawName: "v-model",
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c("input", {
+                                                    directives: [
+                                                      {
+                                                        name: "model",
+                                                        rawName: "v-model",
+                                                        value:
+                                                          _vm.price[
+                                                            i * 10 + index
+                                                          ],
+                                                        expression:
+                                                          "price[i*10+index]"
+                                                      }
+                                                    ],
+                                                    staticClass:
+                                                      "form-control col-md-4",
+                                                    attrs: {
+                                                      type: "text",
+                                                      placeholder: "Price"
+                                                    },
+                                                    domProps: {
                                                       value:
-                                                        _vm.smQuantity[index],
-                                                      expression:
-                                                        "smQuantity[index]"
-                                                    }
-                                                  ],
-                                                  staticClass: "col-md-4",
-                                                  attrs: {
-                                                    type: "number",
-                                                    placeholder: "Quantity"
-                                                  },
-                                                  domProps: {
-                                                    value: _vm.smQuantity[index]
-                                                  },
-                                                  on: {
-                                                    input: function($event) {
-                                                      if (
-                                                        $event.target.composing
-                                                      ) {
-                                                        return
+                                                        _vm.price[
+                                                          i * 10 + index
+                                                        ]
+                                                    },
+                                                    on: {
+                                                      input: function($event) {
+                                                        if (
+                                                          $event.target
+                                                            .composing
+                                                        ) {
+                                                          return
+                                                        }
+                                                        _vm.$set(
+                                                          _vm.price,
+                                                          i * 10 + index,
+                                                          $event.target.value
+                                                        )
                                                       }
-                                                      _vm.$set(
-                                                        _vm.smQuantity,
-                                                        index,
-                                                        $event.target.value
-                                                      )
                                                     }
-                                                  }
-                                                })
-                                              ])
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c("input", {
+                                                    directives: [
+                                                      {
+                                                        name: "model",
+                                                        rawName: "v-model",
+                                                        value:
+                                                          _vm.quantity[
+                                                            i * 10 + index
+                                                          ],
+                                                        expression:
+                                                          "quantity[i*10+index]"
+                                                      }
+                                                    ],
+                                                    staticClass:
+                                                      "form-control col-md-4",
+                                                    attrs: {
+                                                      type: "number",
+                                                      placeholder: "Quantity"
+                                                    },
+                                                    domProps: {
+                                                      value:
+                                                        _vm.quantity[
+                                                          i * 10 + index
+                                                        ]
+                                                    },
+                                                    on: {
+                                                      blur: function($event) {
+                                                        return _vm.fillVariant(
+                                                          i,
+                                                          index
+                                                        )
+                                                      },
+                                                      input: function($event) {
+                                                        if (
+                                                          $event.target
+                                                            .composing
+                                                        ) {
+                                                          return
+                                                        }
+                                                        _vm.$set(
+                                                          _vm.quantity,
+                                                          i * 10 + index,
+                                                          $event.target.value
+                                                        )
+                                                      }
+                                                    }
+                                                  })
+                                                ]
+                                              )
                                             }),
                                             0
                                           )
@@ -40009,11 +40263,7 @@ var render = function() {
             })
           ])
         ]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "message row container" }, [
-        _vm.msg ? _c("p", [_vm._v(_vm._s(_vm.msg))]) : _vm._e()
-      ])
+      )
     ])
   ])
 }

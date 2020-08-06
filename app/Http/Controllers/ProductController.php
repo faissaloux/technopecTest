@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\productRequest;
-use App\Repositories\ColorRepositoryInterface;
-use App\Repositories\MaterialRepositoryInterface;
 use App\Repositories\ProductRepositoryInterface;
-use App\Repositories\SizeRepositoryInterface;
+use App\Repositories\VariantRepositoryInterface;
 
 class ProductController extends Controller
 {
@@ -16,40 +14,24 @@ class ProductController extends Controller
    */
     private $product;
 
-    /**
-     * @var ColorRepositoryInterface
+     /**
+     * @var VariantRepositoryInterface
      */
-    private $color;
-
-    /**
-     * @var MaterialRepositoryInterface
-     */
-    private $material;
-
-    /**
-     * @var SizeRepositoryInterface
-     */
-    private $size;
+    private $variant;
 
     /**
    * Product Controller constructor
    * 
    * @param ProductRepositoryInterface $product
-   * @param ColorRepositoryInterface $color
-   * @param MaterialRepositoryInterface $material
-   * @param SizeRepositoryInterface $size
+   * @param VariantRepositoryInterface $variant
    * @return void
    */
     public function __construct(
         ProductRepositoryInterface $product,
-        ColorRepositoryInterface $color,
-        MaterialRepositoryInterface $material,
-        SizeRepositoryInterface $size)
+        VariantRepositoryInterface $variant)
     {
         $this->product = $product;
-        $this->color = $color;
-        $this->material = $material;
-        $this->size = $size;
+        $this->variant = $variant;
     }
 
     public function create(productRequest $request)
@@ -57,34 +39,26 @@ class ProductController extends Controller
 
         $product = $this->product->newProduct($request);
         $product->save();
-
-        foreach($request->colors as $color){
-            $Color = $this->color->newColor($product->id, $color['value']);
-            $product->colors()->save($Color);
-        }
-
-        foreach($request->materials as $material){
-            $Material = $this->material->newMaterial($product->id, $material['value']);
-            $product->materials()->save($Material);
-        }
-
-        foreach($request->sizes as $size){
-            $Size = $this->size->newSize($product->id, $size['value']);
-            $product->sizes()->save($Size);
+        
+        if(count($request->variants)){
+            foreach($request->variants as $v){
+                $variant = $this->variant->newVariant($v);
+                $product->variants()->save($variant);
+            }
         }
 
         if($product->save()){
-            session()->flash('success', 'Student added successfully');
+            session()->flash('success', 'Product added successfully');
         }else{
             session()->flash('failed', 'Something went wrong!');
             $product->delete();
         }
-        return response();
+        return response()->json(['status' => 'ok']);
     }
 
     public function show()
     {
-        $products = $this->product->productcms()->get();
+        $products = $this->product->productwithVariants()->get();
         return json_encode($products);
     }
 }

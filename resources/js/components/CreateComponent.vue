@@ -2,6 +2,9 @@
     <div class="create w-50">
         <div class="create-product ml-2">
             <form class="addProduct" @submit.prevent="create" method="post">
+                <div class="message">
+                    <p v-if="errorMsg">{{ errorMsg }}</p>
+                </div>
                 <div class="form-group">
                     <input type="hidden" name="_token" :value="csrf">
                     <h2>Add product</h2>
@@ -97,76 +100,112 @@
                                     <!-- One variant -->
                                     <div v-if="onlyOne">
                                         <div v-if="sizeTags.length">
-                                            <div v-for="(sizeTag, index) in sizeTags" :key="index">
+                                            <div v-for="(sizeTag, index) in sizeTags" :key="index" class="row">
                                                 <span class="col-md-4">{{ sizeTag.value }}</span>
-                                                <input type="text" class="col-md-4" placeholder="Price" v-model="sPrice[index]">
-                                                <input type="number" class="col-md-4" placeholder="Quantity" v-model="sQuantity[index]">
+                                                <input type="text" class="form-control col-md-4" placeholder="Price" v-model="price[index]">
+                                                <input type="number" class="form-control col-md-4" placeholder="Quantity" v-model="quantity[index]">
                                             </div>
                                         </div>
                                         <div v-else-if="colorTags.length">
-                                            <div v-for="(colorTag, index) in colorTags" :key="index">
+                                            <div v-for="(colorTag, index) in colorTags" :key="index" class="row">
                                                 <span class="col-md-4">{{ colorTag.value }}</span>
-                                                <input type="text" class="col-md-4" placeholder="Price" v-model="cPrice[index]">
-                                                <input type="number" class="col-md-4" placeholder="Quantity" v-model="cQuantity[index]">
+                                                <input type="text" class="form-control col-md-4" placeholder="Price" v-model="price[index]">
+                                                <input type="number" class="form-control col-md-4" placeholder="Quantity" v-model="quantity[index]">
                                             </div>
                                         </div>
                                         <div v-else-if="materialTags.length">
-                                            <div v-for="(materialTag, index) in materialTags" :key="index">
+                                            <div v-for="(materialTag, index) in materialTags" :key="index" class="row">
                                                 <span class="col-md-4">{{ materialTag.value }}</span>
-                                                <input type="text" class="col-md-4" placeholder="Price" v-model="mPrice[index]">
-                                                <input type="number" class="col-md-4" placeholder="Quantity" v-model="mQuantity[index]">
+                                                <input type="text" class="form-control col-md-4" placeholder="Price" v-model="price[index]">
+                                                <input type="number" class="form-control col-md-4" placeholder="Quantity" v-model="quantity[index]">
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> <!-- One variant end -->
                                     <!-- Color + Size && Color+ Material && All three -->
                                     <div v-else-if="colorTags.length">
                                         <div v-if="sizeTags.length">
                                             <!-- All three variants -->
                                             <div v-if="materialTags.length">
                                                 <div v-for="(sizeTag, index) in sizeTags" :key="index" class="row">
-                                                    <div v-for="(colorTag, index) in colorTags" :key="index">
-                                                        <div v-for="(materialTag, index) in materialTags" :key="index">
+                                                    <div v-for="(colorTag, index) in colorTags" :key="index" class="row">
+                                                        <div v-for="(materialTag, index) in materialTags" :key="index" class="row">
                                                             <span class="col-md-4">{{ sizeTag.value }}/{{ colorTag.value }}/{{ materialTag.value }}</span>
-                                                            <input type="text" class="col-md-4" placeholder="Price" v-model="scmPrice[index]">
-                                                            <input type="number" class="col-md-4" placeholder="Quantity" v-model="scmQuantity[index]">
+                                                            <input  type="text"
+                                                                    class="form-control col-md-4"
+                                                                    placeholder="Price"
+                                                                    v-model="price[i*10+index]">
+                                                            <input  type="number"
+                                                                    class="form-control col-md-4"
+                                                                    placeholder="Quantity"
+                                                                    v-model="quantity[i*10+index]">
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> <!-- All three variants end -->
                                             <!-- Color + Size -->
                                             <div v-else>
-                                                <div v-for="(sizeTag, index) in sizeTags" :key="index" class="row">
-                                                    <div v-for="(colorTag, index) in colorTags" :key="index">
-                                                        <span class="col-md-4">{{ sizeTag.value }}/{{ colorTag.value }}</span>
-                                                        <input type="text" class="col-md-4" placeholder="Price" v-model="scPrice[index]">
-                                                        <input type="number" class="col-md-4" placeholder="Quantity" v-model="scQuantity[index]">
+                                                <div v-for="(sizeTag, i) in sizeTags" :key="i" class="row">
+                                                    <div v-for="(colorTag, index) in colorTags" :key="index" class="row">
+                                                        <span class="col-md-4">
+                                                            <span :id="'size'+i*10+index">{{ sizeTag.value }}</span>/
+                                                            <span :id="'color'+i*10+index">{{ colorTag.value }}</span>
+                                                        </span>
+                                                        <input  type="text"
+                                                                class="form-control col-md-4"
+                                                                placeholder="Price"
+                                                                v-model="price[i*10+index]">
+                                                        <input  type="number"
+                                                                @blur="fillVariant(i, index)"
+                                                                class="form-control col-md-4"
+                                                                placeholder="Quantity"
+                                                                v-model="quantity[i*10+index]">
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> <!-- Color + Size end  -->
                                         </div>
                                         <!-- Color + Material -->
                                         <div v-else-if="materialTags.length">
-                                            <div v-for="(materialTag, index) in materialTags" :key="index" class="row">
-                                                <div v-for="(colorTag, index) in colorTags" :key="index">
-                                                    <span class="col-md-4">{{ materialTag.value }}/{{ colorTag.value }}</span>
-                                                    <input type="text" class="col-md-4" placeholder="Price" v-model="mcPrice[index]">
-                                                    <input type="number" class="col-md-4" placeholder="Quantity" v-model="mcQuantity[index]">
+                                            <div v-for="(materialTag, i) in materialTags" :key="i" class="row">
+                                                <div v-for="(colorTag, index) in colorTags" :key="index" class="row">
+                                                    <span class="col-md-4">
+                                                        <span :id="'material'+i*10+index">{{ materialTag.value }}</span>/
+                                                        <span :id="'color'+i*10+index">{{ colorTag.value }}</span>
+                                                    </span>
+                                                    <input  type="text"
+                                                            class="form-control col-md-4"
+                                                            placeholder="Price"
+                                                            v-model="price[i*10+index]">
+                                                    <input  type="number"
+                                                            @blur="fillVariant(i, index)"
+                                                            class="form-control col-md-4"
+                                                            placeholder="Quantity"
+                                                            v-model="quantity[i*10+index]">
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> <!-- Color + Size && Color+ Material && All three end -->
                                     <!-- Size + Material -->
                                     <div v-else-if="sizeTags.length">
                                         <div v-if="materialTags.length">
-                                            <div v-for="(sizeTag, index) in sizeTags" :key="index" class="row">
-                                                <div v-for="(materialTag, index) in materialTags" :key="index">
-                                                    <span class="col-md-4">{{ sizeTag.value }}/{{ materialTag.value }}</span>
-                                                    <input type="text" class="col-md-4" placeholder="Price" v-model="smPrice[index]">
-                                                    <input type="number" class="col-md-4" placeholder="Quantity" v-model="smQuantity[index]">
+                                            <div v-for="(sizeTag, i) in sizeTags" :key="i" class="row">
+                                                <div v-for="(materialTag, index) in materialTags" :key="index" class="row">
+                                                    <span class="col-md-4">
+                                                        <span :id="'size'+i*10+index">{{ sizeTag.value }}</span>/
+                                                        <span :id="'material'+i*10+index">{{ materialTag.value }}</span>
+                                                    </span>
+                                                    <input  type="text"
+                                                            class="form-control col-md-4"
+                                                            placeholder="Price"
+                                                            v-model="price[i*10+index]">
+                                                    <input  type="number"
+                                                            @blur="fillVariant(i, index)"
+                                                            class="form-control col-md-4"
+                                                            placeholder="Quantity"
+                                                            v-model="quantity[i*10+index]">
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> <!-- Size+ Material end -->
                                 </div>
                             </div> <!-- Preview section end -->
 
@@ -176,9 +215,6 @@
                 </div>
 
             </form>
-            <div class="message row container">
-                <p v-if="msg">{{ msg }}</p>
-            </div>
         </div> <!-- End create-product -->
     </div>
 </template>
@@ -192,23 +228,14 @@ export default {
             description: '',
             color: [],
             size: [],
+            sizeList: [],
             material: [],
-            quantity: '',
-            sQuantity: [],
-            cQuantity: [],
-            mQuantity: [],
-            scQuantity: [],
-            mcQuantity: [],
-            scmQuantity: [],
-            smQuantity: [],
-            sPrice: [],
-            cPrice: [],
-            mPrice: [],
-            scPrice: [],
-            mcPrice: [],
-            scmPrice: [],
-            smPrice: [],
-            msg: '',
+            price: [],
+            quantity: [],
+            priceList: [],
+            quantityList: [],
+            errorMsg: '',
+            variants: [],
             hasVariants: false,
             options: [
                 {
@@ -229,6 +256,22 @@ export default {
             e.preventDefault();
             this.options.push({option: this.options.length+1});
             this.options[this.options.length-1].optionSelected = 'color';
+        },
+        idExists(option){
+            return document.body.contains(document.getElementById(option)) || null;
+        },
+        fillVariant(i, index){
+            let sizeVal = this.idExists('size'+i*10+index) && document.getElementById('size'+i*10+index).innerHTML;
+            let colorVal = this.idExists('color'+i*10+index) && document.getElementById('color'+i*10+index).innerHTML;
+            let materialVal = this.idExists('material'+i*10+index) && document.getElementById('material'+i*10+index).innerHTML;
+
+            // variants
+            this.variants.push({id: i*10+index});
+            this.variants[this.variants.length-1].price = this.priceList[this.variants.length-1];
+            this.variants[this.variants.length-1].quantity = this.quantityList[this.variants.length-1];
+            this.variants[this.variants.length-1].size = sizeVal;
+            this.variants[this.variants.length-1].color = colorVal;
+            this.variants[this.variants.length-1].material = materialVal;
         },
         removeOption(index, option){
             var f = [];
@@ -322,31 +365,11 @@ export default {
             axios.post('/cart/create',
             {   title: this.title,
                 description: this.description,
-                colors: this.colorTags,
-                sizes: this.sizeTags,
-                materials: this.materialTags,
-                sQuantity: this.sQuantity,
-                cQuantity: this.cQuantity,
-                mQuantity: this.mQuantity,
-                scQuantity: this.scQuantity,
-                mcQuantity: this.mcQuantity,
-                scmQuantity: this.scmQuantity,
-                smQuantity: this.smQuantity,
-                sPrice: this.sPrice,
-                cPrice: this.cPrice,
-                mPrice: this.mPrice,
-                scPrice: this.scPrice,
-                mcPrice: this.mcPrice,
-                scmPrice: this.scmPrice,
-                smPrice: this.smPrice
+                variants: this.variants,
             })
-            .then(response => {
-                this.msg = "Product added successfully!"
-                console.log(response.data);
+            .catch( error =>{
+                this.errorMsg = "Check if any field is empty!"
             })
-            // .catch( error =>{
-            //     this.msg = "Check if any field is empty!"
-            // })
         }
         
     },
@@ -381,12 +404,29 @@ export default {
                 option: 1,
                 optionSelected: 'size'
             }]
+        },
+        price(){
+            this.priceList = this.price.filter(p => Number.isInteger(parseInt(p)));
+        },
+        quantity(){
+            this.quantityList = this.quantity.filter(p => Number.isInteger(parseInt(p)));
         }
     }
 }
 </script>
 
 <style scoped lang="scss">
+    // Variables
+    @import '../../sass/variables';
+
+    div.message{
+        margin-left: -10px;
+        p{
+            background-color: $error;
+            color: #FFF;
+            text-align: center;
+        }
+    }
     .pointer{
         cursor: pointer;
     }

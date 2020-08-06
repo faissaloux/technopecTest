@@ -2,6 +2,26 @@
   margin: 0;
 }
 
+div.successFlash {
+  margin-left: -10px;
+}
+
+div.successFlash p {
+  background-color: #20A151;
+  color: #FFF;
+  text-align: center;
+}
+
+div.failedFlash {
+  margin-left: -10px;
+}
+
+div.failedFlash p {
+  background-color: #ED5B53;
+  color: #FFF;
+  text-align: center;
+}
+
 div.content {
   height: 100vh;
   background: url(/images/welcome.jpg?e1c25fd288abd65b0f75b25433d70215);

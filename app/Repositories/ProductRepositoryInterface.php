@@ -19,12 +19,10 @@ interface ProductRepositoryInterface
 
     /**
      * Bring all products from products table
-     * with its colors from colors table
-     * and materials from materials table
-     * and sizes from sizes table.
+     * with its variants from variants table.
      * 
      * @return Builder|null
      */
-    public function productcms(): ?Builder;
+    public function productwithVariants(): ?Builder;
 
 }

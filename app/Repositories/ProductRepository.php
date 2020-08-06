@@ -24,16 +24,12 @@ class ProductRepository implements ProductRepositoryInterface
         $product = new $this->model;
         $product->product = $request->title;
         $product->description = $request->description;
-        $product->quantity = $request->quantity;
-        $product->price = $request->price;
         
         return $product;
     }
 
-    public function productcms(): ?Builder
+    public function productwithVariants(): ?Builder
     {
-        return $this->model->with('colors')
-                           ->with('materials')
-                           ->with('sizes');
+        return $this->model->with('variants');
     }
 }

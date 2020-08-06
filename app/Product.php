@@ -6,18 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    public function colors()
+    public function variants()
     {
-        return $this->hasMany('App\Color');
-    }
-
-    public function materials()
-    {
-        return $this->hasMany('App\Material');
-    }
-
-    public function sizes()
-    {
-        return $this->hasMany('App\Size');
+        return $this->hasMany('App\Variant');
     }
 }

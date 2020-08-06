@@ -14,18 +14,8 @@ class repositoriesServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
-            'App\Repositories\ColorRepositoryInterface',
-            'App\Repositories\ColorRepository'
-        );
-
-        $this->app->bind(
-            'App\Repositories\MaterialRepositoryInterface',
-            'App\Repositories\MaterialRepository'
-        );
-
-        $this->app->bind(
-            'App\Repositories\SizeRepositoryInterface',
-            'App\Repositories\SizeRepository'
+            'App\Repositories\VariantRepositoryInterface',
+            'App\Repositories\VariantRepository'
         );
     }
 }
