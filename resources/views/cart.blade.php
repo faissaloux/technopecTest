@@ -18,10 +18,13 @@
                 </button>
             </div>
         </div>
-        <div class="right w-50">
+        <div class="right w-100">
             
             <dashboard-component v-if="dashboardSection"></dashboard-component>
-            <create-component v-if="createSection"></create-component>
+            <div v-if="createSection">
+                @include('partials.flash')
+                <create-component></create-component>
+            </div>
             <products-component v-if="productsSection"></products-component>
         </div>
     </div>

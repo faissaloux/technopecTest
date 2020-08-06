@@ -54,28 +54,32 @@ class ProductController extends Controller
 
     public function create(productRequest $request)
     {
+
         $product = $this->product->newProduct($request);
         $product->save();
 
-        $colors = explode(', ', $request->color);
-        foreach($colors as $color){
-            $Color = $this->color->newColor($product->id, $color);
+        foreach($request->colors as $color){
+            $Color = $this->color->newColor($product->id, $color['value']);
             $product->colors()->save($Color);
         }
 
-        $materials = explode(', ', $request->material);
-        foreach($materials as $material){
-            $Material = $this->material->newMaterial($product->id, $material);
+        foreach($request->materials as $material){
+            $Material = $this->material->newMaterial($product->id, $material['value']);
             $product->materials()->save($Material);
         }
 
-        $sizes = explode(', ', $request->size);
-        foreach($sizes as $size){
-            $Size = $this->size->newSize($product->id, $size);
+        foreach($request->sizes as $size){
+            $Size = $this->size->newSize($product->id, $size['value']);
             $product->sizes()->save($Size);
         }
 
-        return redirect()->back();
+        if($product->save()){
+            session()->flash('success', 'Student added successfully');
+        }else{
+            session()->flash('failed', 'Something went wrong!');
+            $product->delete();
+        }
+        return response();
     }
 
     public function show()

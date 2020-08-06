@@ -2,6 +2,9 @@
     <div class="products">
         <div class="container">
             <div class="mt-5">
+                <div>
+                    <p>Number of products: {{ products.length }}</p>
+                </div>
                 <div class="row container">
                     <div class="card col-md-3" v-for="product in products" :key="product.id">
                         <img class="card-img-top" src="/images/products/product1.jpg" alt="Card image cap">

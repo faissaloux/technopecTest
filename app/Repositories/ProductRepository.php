@@ -22,7 +22,8 @@ class ProductRepository implements ProductRepositoryInterface
     public function newProduct($request): ?Model
     {
         $product = new $this->model;
-        $product->product = $request->product;
+        $product->product = $request->title;
+        $product->description = $request->description;
         $product->quantity = $request->quantity;
         $product->price = $request->price;
         
