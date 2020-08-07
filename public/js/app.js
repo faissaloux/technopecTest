@@ -39251,14 +39251,14 @@ var render = function() {
                     ),
                     _vm._v(" "),
                     _vm.tags.length
-                      ? _c("div", [
+                      ? _c("div", { staticClass: "d-flex flex-column" }, [
                           _c("hr"),
                           _vm._v(" "),
                           _c("p", [_vm._v("Preview")]),
                           _vm._v(" "),
                           _vm._m(0),
                           _vm._v(" "),
-                          _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "d-flex flex-column" }, [
                             _vm.onlyOne
                               ? _c("div", [
                                   _vm.sizeTags.length
@@ -39550,19 +39550,13 @@ var render = function() {
                                               ) {
                                                 return _c(
                                                   "div",
-                                                  {
-                                                    key: index,
-                                                    staticClass: "row"
-                                                  },
+                                                  { key: index },
                                                   _vm._l(
                                                     _vm.colorTags,
                                                     function(colorTag, index) {
                                                       return _c(
                                                         "div",
-                                                        {
-                                                          key: index,
-                                                          staticClass: "row"
-                                                        },
+                                                        { key: index },
                                                         _vm._l(
                                                           _vm.materialTags,
                                                           function(
@@ -39737,10 +39731,7 @@ var render = function() {
                                               ) {
                                                 return _c(
                                                   "div",
-                                                  {
-                                                    key: i,
-                                                    staticClass: "row"
-                                                  },
+                                                  { key: i },
                                                   _vm._l(
                                                     _vm.colorTags,
                                                     function(colorTag, index) {
@@ -39924,7 +39915,7 @@ var render = function() {
                                         ) {
                                           return _c(
                                             "div",
-                                            { key: i, staticClass: "row" },
+                                            { key: i },
                                             _vm._l(_vm.colorTags, function(
                                               colorTag,
                                               index
@@ -40092,7 +40083,7 @@ var render = function() {
                                         ) {
                                           return _c(
                                             "div",
-                                            { key: i, staticClass: "row" },
+                                            { key: i },
                                             _vm._l(_vm.materialTags, function(
                                               materialTag,
                                               index

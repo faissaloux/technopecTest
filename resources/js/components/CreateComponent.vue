@@ -88,7 +88,7 @@
                                 <button class="btn btn-secondary" @click="addOption">Add another option</button>
                             </div> <!-- Options section end -->
                             <!-- Preview section -->
-                            <div v-if="tags.length">
+                            <div v-if="tags.length" class="d-flex flex-column">
                                 <hr>
                                 <p>Preview</p>
                                 <div class="row">
@@ -96,7 +96,7 @@
                                     <span class="col-md-4">Price</span>
                                     <span class="col-md-4">Quantity</span>
                                 </div>
-                                <div class="row">
+                                <div class="d-flex flex-column">
                                     <!-- One variant -->
                                     <div v-if="onlyOne">
                                         <div v-if="sizeTags.length">
@@ -126,8 +126,8 @@
                                         <div v-if="sizeTags.length">
                                             <!-- All three variants -->
                                             <div v-if="materialTags.length">
-                                                <div v-for="(sizeTag, index) in sizeTags" :key="index" class="row">
-                                                    <div v-for="(colorTag, index) in colorTags" :key="index" class="row">
+                                                <div v-for="(sizeTag, index) in sizeTags" :key="index">
+                                                    <div v-for="(colorTag, index) in colorTags" :key="index">
                                                         <div v-for="(materialTag, index) in materialTags" :key="index" class="row">
                                                             <span class="col-md-4">{{ sizeTag.value }}/{{ colorTag.value }}/{{ materialTag.value }}</span>
                                                             <input  type="text"
@@ -144,7 +144,7 @@
                                             </div> <!-- All three variants end -->
                                             <!-- Color + Size -->
                                             <div v-else>
-                                                <div v-for="(sizeTag, i) in sizeTags" :key="i" class="row">
+                                                <div v-for="(sizeTag, i) in sizeTags" :key="i">
                                                     <div v-for="(colorTag, index) in colorTags" :key="index" class="row">
                                                         <span class="col-md-4">
                                                             <span :id="'size'+i*10+index">{{ sizeTag.value }}</span>/
@@ -165,7 +165,7 @@
                                         </div>
                                         <!-- Color + Material -->
                                         <div v-else-if="materialTags.length">
-                                            <div v-for="(materialTag, i) in materialTags" :key="i" class="row">
+                                            <div v-for="(materialTag, i) in materialTags" :key="i">
                                                 <div v-for="(colorTag, index) in colorTags" :key="index" class="row">
                                                     <span class="col-md-4">
                                                         <span :id="'material'+i*10+index">{{ materialTag.value }}</span>/
@@ -187,7 +187,7 @@
                                     <!-- Size + Material -->
                                     <div v-else-if="sizeTags.length">
                                         <div v-if="materialTags.length">
-                                            <div v-for="(sizeTag, i) in sizeTags" :key="i" class="row">
+                                            <div v-for="(sizeTag, i) in sizeTags" :key="i">
                                                 <div v-for="(materialTag, index) in materialTags" :key="index" class="row">
                                                     <span class="col-md-4">
                                                         <span :id="'size'+i*10+index">{{ sizeTag.value }}</span>/
