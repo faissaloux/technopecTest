@@ -2484,8 +2484,78 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: [''],
   data: function data() {
     return {
       products: [],
@@ -2505,6 +2575,7 @@ __webpack_require__.r(__webpack_exports__);
 
     axios.get('/cart/show').then(function (response) {
       _this.products = response.data;
+      $("div.loading").fadeOut();
     });
   }
 });
@@ -6972,7 +7043,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "tbody > tr[data-v-5ecce49e] {\n  cursor: pointer;\n}\nform.addProduct input[data-v-5ecce49e] {\n  width: 150px;\n}\ndiv.message[data-v-5ecce49e] {\n  color: blue;\n  text-align: center;\n}\ndiv.message p[data-v-5ecce49e] {\n  width: 100%;\n}\ndiv.dC[data-v-5ecce49e] {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  background-color: rgba(0, 0, 0, 0.8);\n  cursor: default;\n  overflow-y: hidden;\n}\ndiv.pD[data-v-5ecce49e] {\n  position: relative;\n  width: 600px;\n  height: 400px;\n  background-color: #CCC;\n  border-radius: 5px;\n}\ndiv.close[data-v-5ecce49e] {\n  position: absolute;\n  top: 5px;\n  right: 10px;\n  color: #666;\n  cursor: pointer;\n}\ndiv.productDetails div p[data-v-5ecce49e] {\n  font-size: 24px;\n}\ndiv.productDetails div p.imgCont[data-v-5ecce49e] {\n  background: url(\"/images/products/product1.jpg\");\n  background-size: cover;\n  background-attachment: fixed;\n  height: 400px;\n  width: 50%;\n  overflow: hidden;\n}\ndiv.productDetails div div[data-v-5ecce49e] {\n  margin-left: 5px;\n  padding: 10px;\n}\ndiv.productDetails div div span[data-v-5ecce49e] {\n  font-size: 18px;\n}\ndiv.productDetails div div span.title[data-v-5ecce49e] {\n  width: 120px;\n  font-weight: 800;\n}", ""]);
+exports.push([module.i, "div.loading[data-v-5ecce49e] {\n  position: absolute;\n  z-index: 2;\n  background-color: #1b1d1f;\n  width: 100%;\n  height: 92%;\n  left: 300px;\n  top: 56px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\ndiv.loading img[data-v-5ecce49e] {\n  width: 150px;\n  height: 150px;\n}\ntbody > tr[data-v-5ecce49e] {\n  cursor: pointer;\n}\nform.addProduct input[data-v-5ecce49e] {\n  width: 150px;\n}\ndiv.message[data-v-5ecce49e] {\n  color: blue;\n  text-align: center;\n}\ndiv.message p[data-v-5ecce49e] {\n  width: 100%;\n}\ndiv.scroll[data-v-5ecce49e] {\n  overflow-y: scroll;\n  height: 275px;\n}\ndiv.dC[data-v-5ecce49e] {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  background-color: rgba(0, 0, 0, 0.8);\n  cursor: default;\n  overflow-y: hidden;\n}\ndiv.pD[data-v-5ecce49e] {\n  position: relative;\n  width: 650px;\n  height: 400px;\n  background-color: #CCC;\n  border-radius: 5px;\n}\ndiv.close[data-v-5ecce49e] {\n  position: absolute;\n  top: 5px;\n  right: 10px;\n  color: #666;\n  cursor: pointer;\n}\ndiv.productDetails div p[data-v-5ecce49e] {\n  font-size: 24px;\n}\ndiv.productDetails div p.imgCont[data-v-5ecce49e] {\n  background: url(\"/images/products/product1.jpg\");\n  background-size: cover;\n  background-attachment: fixed;\n  height: 400px;\n  width: 50%;\n  overflow: hidden;\n}\ndiv.productDetails div div[data-v-5ecce49e] {\n  margin-left: -6px;\n  padding: 10px;\n}\ndiv.productDetails div div p[data-v-5ecce49e] {\n  font-size: 18px;\n}\ndiv.productDetails div div p.title[data-v-5ecce49e] {\n  width: 120px;\n  font-weight: 800;\n}", ""]);
 
 // exports
 
@@ -40377,14 +40448,19 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "products" }, [
     _c("div", { staticClass: "container" }, [
+      _vm._m(0),
+      _vm._v(" "),
       _c(
         "div",
         { staticClass: "mt-5" },
         [
           _c("div", [
-            _c("p", [
-              _vm._v("Number of products: " + _vm._s(_vm.products.length))
-            ])
+            _vm.products.length
+              ? _c("p", [
+                  _vm._v("Number of products: "),
+                  _c("b", [_vm._v(_vm._s(_vm.products.length))])
+                ])
+              : _c("p", [_vm._v("No products disponible")])
           ]),
           _vm._v(" "),
           _c(
@@ -40409,16 +40485,18 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("p", { staticClass: "card-text" }, [
-                      _vm._v("Some description")
+                      _vm._v(_vm._s(product.description))
                     ]),
                     _vm._v(" "),
-                    _c("p", [_vm._v("Quantity: " + _vm._s(product.quantity))]),
-                    _vm._v(" "),
                     _c("p", [
-                      _vm._v("Price: " + _vm._s(product.price) + " "),
-                      _c("span", { staticClass: "float-right" }, [
-                        _vm._v("MAD")
-                      ])
+                      _vm._v(
+                        "Quantity: " +
+                          _vm._s(
+                            product.variants.length
+                              ? "+" + product.variants.length
+                              : 1
+                          )
+                      )
                     ]),
                     _vm._v(" "),
                     _c(
@@ -40464,85 +40542,394 @@ var render = function() {
                         _c(
                           "div",
                           {
-                            staticClass: "d-flex flex-column align-items-left"
+                            staticClass:
+                              "d-flex flex-column align-items-left w-100"
                           },
                           [
-                            _c("div", { staticClass: "row" }, [
-                              _c("span", { staticClass: "title" }, [
-                                _vm._v("Product: ")
-                              ]),
-                              _vm._v(" "),
-                              _c("span", [_vm._v(_vm._s(product.product))])
-                            ]),
+                            _c(
+                              "div",
+                              { staticClass: "row justify-content-center" },
+                              [
+                                _c("p", { staticClass: "title" }, [
+                                  _vm._v(_vm._s(product.product))
+                                ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("hr"),
                             _vm._v(" "),
                             _c(
                               "div",
-                              { staticClass: "row" },
+                              { staticClass: "row justify-content-left" },
                               [
-                                _c("span", { staticClass: "title" }, [
-                                  _vm._v("Colors: ")
-                                ]),
-                                _vm._v(" "),
-                                _vm._l(product.colors, function(color) {
-                                  return _c("span", { key: color.id }, [
-                                    _vm._v(_vm._s(color.color) + "   ")
-                                  ])
-                                })
-                              ],
-                              2
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "row" },
-                              [
-                                _c("span", { staticClass: "title" }, [
-                                  _vm._v("Sizes: ")
-                                ]),
-                                _vm._v(" "),
-                                _vm._l(product.sizes, function(size) {
-                                  return _c("span", { key: size.id }, [
-                                    _vm._v(_vm._s(size.size) + "   ")
-                                  ])
-                                })
-                              ],
-                              2
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "row" },
-                              [
-                                _c("span", { staticClass: "title" }, [
-                                  _vm._v("Materials: ")
-                                ]),
-                                _vm._v(" "),
-                                _vm._l(product.materials, function(material) {
-                                  return _c("span", { key: material.id }, [
-                                    _vm._v(_vm._s(material.material) + "   ")
-                                  ])
-                                })
-                              ],
-                              2
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "row" }, [
-                              _c("span", { staticClass: "title" }, [
-                                _vm._v("Quantity: ")
-                              ]),
-                              _vm._v(" "),
-                              _c("span", [_vm._v(_vm._s(product.quantity))])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "row" }, [
-                              _c("span", { staticClass: "title" }, [
-                                _vm._v("Price: ")
-                              ]),
-                              _vm._v(" "),
-                              _c("span", [
-                                _vm._v(_vm._s(product.price) + " MAD")
-                              ])
-                            ])
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "w-100",
+                                    class:
+                                      product.variants.length > 3
+                                        ? "scroll"
+                                        : ""
+                                  },
+                                  [
+                                    product.variants.length
+                                      ? _c("p", { staticClass: "title" }, [
+                                          _vm._v("Variants: ")
+                                        ])
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    _vm._l(product.variants, function(variant) {
+                                      return _c("div", { key: variant.id }, [
+                                        variant.size
+                                          ? _c("div", [
+                                              variant.color
+                                                ? _c("p", [
+                                                    _c(
+                                                      "span",
+                                                      { staticClass: "col-4" },
+                                                      [
+                                                        _vm._v(
+                                                          _vm._s(variant.size) +
+                                                            "/" +
+                                                            _vm._s(
+                                                              variant.color
+                                                            )
+                                                        )
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "span",
+                                                      { staticClass: "col-4" },
+                                                      [
+                                                        _c("span", [
+                                                          _vm._v(
+                                                            _vm._s(
+                                                              variant.price
+                                                            )
+                                                          )
+                                                        ]),
+                                                        _vm._v(" "),
+                                                        _c("span", [
+                                                          _vm._v("  MAD")
+                                                        ])
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "span",
+                                                      { staticClass: "col-4" },
+                                                      [
+                                                        _c("span", [
+                                                          _vm._v(
+                                                            _vm._s(
+                                                              variant.quantity
+                                                            )
+                                                          )
+                                                        ]),
+                                                        _vm._v(" "),
+                                                        variant.quantity == 1
+                                                          ? _c("span", [
+                                                              _vm._v("Piece")
+                                                            ])
+                                                          : variant.quantity > 1
+                                                          ? _c("span", [
+                                                              _vm._v("Pieces")
+                                                            ])
+                                                          : _vm._e()
+                                                      ]
+                                                    )
+                                                  ])
+                                                : variant.material
+                                                ? _c("p", [
+                                                    _c(
+                                                      "span",
+                                                      { staticClass: "col-4" },
+                                                      [
+                                                        _vm._v(
+                                                          _vm._s(variant.size) +
+                                                            "/" +
+                                                            _vm._s(
+                                                              variant.material
+                                                            )
+                                                        )
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "span",
+                                                      { staticClass: "col-4" },
+                                                      [
+                                                        _c("span", [
+                                                          _vm._v(
+                                                            _vm._s(
+                                                              variant.price
+                                                            )
+                                                          )
+                                                        ]),
+                                                        _vm._v(" "),
+                                                        _c("span", [
+                                                          _vm._v("  MAD")
+                                                        ])
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "span",
+                                                      { staticClass: "col-4" },
+                                                      [
+                                                        _c("span", [
+                                                          _vm._v(
+                                                            _vm._s(
+                                                              variant.quantity
+                                                            )
+                                                          )
+                                                        ]),
+                                                        _vm._v(" "),
+                                                        variant.quantity == 1
+                                                          ? _c("span", [
+                                                              _vm._v("Piece")
+                                                            ])
+                                                          : variant.quantity > 1
+                                                          ? _c("span", [
+                                                              _vm._v("Pieces")
+                                                            ])
+                                                          : _vm._e()
+                                                      ]
+                                                    )
+                                                  ])
+                                                : _c("p", [
+                                                    _c(
+                                                      "span",
+                                                      { staticClass: "col-4" },
+                                                      [
+                                                        _vm._v(
+                                                          _vm._s(variant.size)
+                                                        )
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "span",
+                                                      { staticClass: "col-4" },
+                                                      [
+                                                        _c("span", [
+                                                          _vm._v(
+                                                            _vm._s(
+                                                              variant.price
+                                                            )
+                                                          )
+                                                        ]),
+                                                        _vm._v(" "),
+                                                        _c("span", [
+                                                          _vm._v("  MAD")
+                                                        ])
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "span",
+                                                      { staticClass: "col-4" },
+                                                      [
+                                                        _c("span", [
+                                                          _vm._v(
+                                                            _vm._s(
+                                                              variant.quantity
+                                                            )
+                                                          )
+                                                        ]),
+                                                        _vm._v(" "),
+                                                        variant.quantity == 1
+                                                          ? _c("span", [
+                                                              _vm._v("Piece")
+                                                            ])
+                                                          : variant.quantity > 1
+                                                          ? _c("span", [
+                                                              _vm._v("Pieces")
+                                                            ])
+                                                          : _vm._e()
+                                                      ]
+                                                    )
+                                                  ])
+                                            ])
+                                          : variant.color
+                                          ? _c("div", [
+                                              variant.material
+                                                ? _c("p", [
+                                                    _c(
+                                                      "span",
+                                                      { staticClass: "col-4" },
+                                                      [
+                                                        _vm._v(
+                                                          _vm._s(
+                                                            variant.color
+                                                          ) +
+                                                            "/" +
+                                                            _vm._s(
+                                                              variant.material
+                                                            )
+                                                        )
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "span",
+                                                      { staticClass: "col-4" },
+                                                      [
+                                                        _c("span", [
+                                                          _vm._v(
+                                                            _vm._s(
+                                                              variant.price
+                                                            )
+                                                          )
+                                                        ]),
+                                                        _vm._v(" "),
+                                                        _c("span", [
+                                                          _vm._v("  MAD")
+                                                        ])
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "span",
+                                                      { staticClass: "col-4" },
+                                                      [
+                                                        _c("span", [
+                                                          _vm._v(
+                                                            _vm._s(
+                                                              variant.quantity
+                                                            )
+                                                          )
+                                                        ]),
+                                                        _vm._v(" "),
+                                                        variant.quantity == 1
+                                                          ? _c("span", [
+                                                              _vm._v("Piece")
+                                                            ])
+                                                          : variant.quantity > 1
+                                                          ? _c("span", [
+                                                              _vm._v("Pieces")
+                                                            ])
+                                                          : _vm._e()
+                                                      ]
+                                                    )
+                                                  ])
+                                                : _c("p", [
+                                                    _c(
+                                                      "span",
+                                                      { staticClass: "col-4" },
+                                                      [
+                                                        _vm._v(
+                                                          _vm._s(variant.color)
+                                                        )
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "span",
+                                                      { staticClass: "col-4" },
+                                                      [
+                                                        _c("span", [
+                                                          _vm._v(
+                                                            _vm._s(
+                                                              variant.price
+                                                            )
+                                                          )
+                                                        ]),
+                                                        _vm._v(" "),
+                                                        _c("span", [
+                                                          _vm._v("  MAD")
+                                                        ])
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "span",
+                                                      { staticClass: "col-4" },
+                                                      [
+                                                        _c("span", [
+                                                          _vm._v(
+                                                            _vm._s(
+                                                              variant.quantity
+                                                            )
+                                                          )
+                                                        ]),
+                                                        _vm._v(" "),
+                                                        variant.quantity == 1
+                                                          ? _c("span", [
+                                                              _vm._v("Piece")
+                                                            ])
+                                                          : variant.quantity > 1
+                                                          ? _c("span", [
+                                                              _vm._v("Pieces")
+                                                            ])
+                                                          : _vm._e()
+                                                      ]
+                                                    )
+                                                  ])
+                                            ])
+                                          : variant.material
+                                          ? _c("div", [
+                                              _c("p", [
+                                                _c(
+                                                  "span",
+                                                  { staticClass: "col-4" },
+                                                  [
+                                                    _vm._v(
+                                                      _vm._s(variant.material)
+                                                    )
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "span",
+                                                  { staticClass: "col-4" },
+                                                  [
+                                                    _c("span", [
+                                                      _vm._v(
+                                                        _vm._s(variant.price)
+                                                      )
+                                                    ]),
+                                                    _vm._v(" "),
+                                                    _c("span", [
+                                                      _vm._v("  MAD")
+                                                    ])
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "span",
+                                                  { staticClass: "col-4" },
+                                                  [
+                                                    _c("span", [
+                                                      _vm._v(
+                                                        _vm._s(variant.quantity)
+                                                      )
+                                                    ]),
+                                                    _vm._v(" "),
+                                                    variant.quantity == 1
+                                                      ? _c("span", [
+                                                          _vm._v("Piece")
+                                                        ])
+                                                      : variant.quantity > 1
+                                                      ? _c("span", [
+                                                          _vm._v("Pieces")
+                                                        ])
+                                                      : _vm._e()
+                                                  ]
+                                                )
+                                              ])
+                                            ])
+                                          : _c("div", [
+                                              _c("p", [_vm._v("No variants")])
+                                            ])
+                                      ])
+                                    })
+                                  ],
+                                  2
+                                )
+                              ]
+                            )
                           ]
                         )
                       ])
@@ -40557,7 +40944,16 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "loading" }, [
+      _c("img", { attrs: { src: "images/gif/loading.gif" } })
+    ])
+  }
+]
 render._withStripped = true
 
 

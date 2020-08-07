@@ -1,18 +1,21 @@
 <template>
     <div class="products">
         <div class="container">
+            <div class="loading">
+                <img src="images/gif/loading.gif">
+            </div>
             <div class="mt-5">
                 <div>
-                    <p>Number of products: {{ products.length }}</p>
+                    <p v-if="products.length">Number of products: <b>{{ products.length }}</b></p>
+                    <p v-else>No products disponible</p>
                 </div>
                 <div class="row container">
                     <div class="card col-md-3" v-for="product in products" :key="product.id">
                         <img class="card-img-top" src="/images/products/product1.jpg" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">{{ product.product }}</h5>
-                            <p class="card-text">Some description</p>
-                            <p>Quantity: {{ product.quantity }}</p>
-                            <p>Price: {{ product.price }} <span class="float-right">MAD</span></p>
+                            <p class="card-text">{{ product.description }}</p>
+                            <p>Quantity: {{ product.variants.length ? '+'+product.variants.length : 1 }}</p>
                             <button @click="productDetails(product.id)" class="btn btn-primary float-right">Details</button>
                         </div>
                     </div>
@@ -23,30 +26,98 @@
                             <div class="close" @click="productInfoDetails = 0">X</div>
                             <div class="d-flex">
                                 <p class="imgCont d-flex"></p>
-                                <div class="d-flex flex-column align-items-left">
-                                    <div class="row">
-                                        <span class="title">Product: </span>
-                                        <span>{{ product.product }}</span>
+                                <div class="d-flex flex-column align-items-left w-100">
+                                    <div class="row justify-content-center">
+                                        <p class="title">{{ product.product }}</p>
                                     </div>
-                                    <div class="row">
-                                        <span class="title">Colors: </span>
-                                        <span v-for="color in product.colors" :key="color.id">{{ color.color }} &nbsp; </span>
-                                    </div>
-                                    <div class="row">
-                                        <span class="title">Sizes: </span>
-                                        <span v-for="size in product.sizes" :key="size.id">{{ size.size }} &nbsp; </span>
-                                    </div>
-                                    <div class="row">
-                                        <span class="title">Materials: </span>
-                                        <span v-for="material in product.materials" :key="material.id">{{ material.material }} &nbsp; </span>
-                                    </div>
-                                    <div class="row">
-                                        <span class="title">Quantity: </span>
-                                        <span>{{ product.quantity }}</span>
-                                    </div>
-                                    <div class="row">
-                                        <span class="title">Price: </span>
-                                        <span>{{ product.price }} MAD</span>
+                                    <hr>
+                                    <div class="row justify-content-left">
+                                        <div class="w-100" :class="product.variants.length > 3 ? 'scroll' : ''">
+                                            <p class="title" v-if="product.variants.length">Variants: </p>
+                                            <div v-for="variant in product.variants" :key="variant.id">
+                                                <div v-if="variant.size">
+                                                    <p v-if="variant.color">
+                                                        <span class="col-4">{{ variant.size }}/{{ variant.color }}</span>
+                                                        <span class="col-4">
+                                                            <span>{{ variant.price }}</span>
+                                                            <span>&nbsp; MAD</span>
+                                                        </span>
+                                                        <span class="col-4">
+                                                            <span>{{ variant.quantity }}</span>
+                                                            <span v-if="variant.quantity == 1">Piece</span>
+                                                            <span v-else-if="variant.quantity > 1">Pieces</span>
+                                                        </span>
+                                                    </p>
+                                                    <p v-else-if="variant.material">
+                                                        <span class="col-4">{{ variant.size }}/{{ variant.material }}</span>
+                                                        <span class="col-4">
+                                                            <span>{{ variant.price }}</span>
+                                                            <span>&nbsp; MAD</span>
+                                                        </span>
+                                                        <span class="col-4">
+                                                            <span>{{ variant.quantity }}</span>
+                                                            <span v-if="variant.quantity == 1">Piece</span>
+                                                            <span v-else-if="variant.quantity > 1">Pieces</span>
+                                                        </span>
+                                                    </p>
+                                                    <p v-else>
+                                                        <span class="col-4">{{ variant.size }}</span>
+                                                        <span class="col-4">
+                                                            <span>{{ variant.price }}</span>
+                                                            <span>&nbsp; MAD</span>
+                                                        </span>
+                                                        <span class="col-4">
+                                                            <span>{{ variant.quantity }}</span>
+                                                            <span v-if="variant.quantity == 1">Piece</span>
+                                                            <span v-else-if="variant.quantity > 1">Pieces</span>
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                                <div v-else-if="variant.color">
+                                                    <p v-if="variant.material">
+                                                        <span class="col-4">{{ variant.color }}/{{ variant.material }}</span>
+                                                        <span class="col-4">
+                                                            <span>{{ variant.price }}</span>
+                                                            <span>&nbsp; MAD</span>
+                                                        </span>
+                                                        <span class="col-4">
+                                                            <span>{{ variant.quantity }}</span>
+                                                            <span v-if="variant.quantity == 1">Piece</span>
+                                                            <span v-else-if="variant.quantity > 1">Pieces</span>
+                                                        </span>
+                                                    </p>
+                                                    <p v-else>
+                                                        <span class="col-4">{{ variant.color }}</span>
+                                                        <span class="col-4">
+                                                            <span>{{ variant.price }}</span>
+                                                            <span>&nbsp; MAD</span>
+                                                        </span>
+                                                        <span class="col-4">
+                                                            <span>{{ variant.quantity }}</span>
+                                                            <span v-if="variant.quantity == 1">Piece</span>
+                                                            <span v-else-if="variant.quantity > 1">Pieces</span>
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                                <div v-else-if="variant.material">
+                                                    <p>
+                                                        <span class="col-4">{{ variant.material }}</span>
+                                                        <span class="col-4">
+                                                            <span>{{ variant.price }}</span>
+                                                            <span>&nbsp; MAD</span>
+                                                        </span>
+                                                        <span class="col-4">
+                                                            <span>{{ variant.quantity }}</span>
+                                                            <span v-if="variant.quantity == 1">Piece</span>
+                                                            <span v-else-if="variant.quantity > 1">Pieces</span>
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                                <div v-else>
+                                                    <p>No variants</p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -60,7 +131,6 @@
 
 <script>
 export default {
-    props: [''],
     data(){
         return{
             products: [],
@@ -77,12 +147,29 @@ export default {
         axios.get('/cart/show')
         .then(response => {
             this.products = response.data;
+            $("div.loading").fadeOut();
         });
     },
 }
 </script>
 
 <style scoped lang="scss">
+    div.loading{
+        position: absolute;
+        z-index: 2;
+        background-color: rgba(#1B1D1F, 1);
+        width: 100%;
+        height: 92%;
+        left: 300px;
+        top: 56px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img{
+            width: 150px;
+            height: 150px;
+        }
+    }
     tbody > tr{
         cursor: pointer;
     }
@@ -97,6 +184,10 @@ export default {
         p{
         width: 100%;
         }
+    }
+    div.scroll{
+        overflow-y: scroll;
+        height: 275px;
     }
     div.dC{
         position: absolute;
@@ -114,7 +205,7 @@ export default {
     }
     div.pD{
         position: relative;
-        width: 600px;
+        width: 650px;
         height: 400px;
         background-color: #CCC;
         border-radius: 5px;
@@ -142,9 +233,9 @@ export default {
                 font-size: 24px;
             }
             div{
-                margin-left: 5px;
+                margin-left: -6px;
                 padding: 10px;
-                span{
+                p{
                     font-size: 18px;
                     &.title{
                         width: 120px;
