@@ -9,6 +9,21 @@ require('./bootstrap');
 window.Vue = require('vue');
 import Products from './components/ProductsComponent.vue';
 import Dashboard from './components/DashboardComponent.vue';
+import Create from './components/CreateComponent.vue';
+
+import VueRouter from 'vue-router';
+
+Vue.use(VueRouter);
+
+const routes = [
+  { path: '/create', name: 'create', component: Create },
+  { path: '/dashboard', name: 'dashboard', component: Dashboard },
+  { path: '/products', name: 'products', component: Products }
+]
+
+const router = new VueRouter({
+    routes
+})
 
 /**
  * The following block of code may be used to automatically register your
@@ -21,7 +36,6 @@ import Dashboard from './components/DashboardComponent.vue';
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('dashboard-component', require('./components/DashboardComponent.vue').default);
 Vue.component('products-component', require('./components/ProductsComponent.vue').default);
 Vue.component('create-component', require('./components/CreateComponent.vue').default);
@@ -32,13 +46,9 @@ Vue.component('create-component', require('./components/CreateComponent.vue').de
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
-    el: '#cart',
-    data:{
-        dashboardSection: true,
-        productsSection: false,
-        createSection: false
-    }
+const cart = new Vue({
+    router,
+    el: '#cart'
 });
 
 $(() => {

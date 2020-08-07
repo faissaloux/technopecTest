@@ -3,29 +3,15 @@
 @section('cart')
     <div class="cart d-flex" id="cart">
         <div class="left">
-            <div class="buttons">
-                <button @click="dashboardSection = true, productsSection = false, createSection = false"
-                        :class="dashboardSection ? 'active': ''">
-                    Dashboard
-                </button>
-                <button @click="createSection = true, dashboardSection = false, productsSection = false"
-                        :class="createSection ? 'active': ''">
-                    Create
-                </button>
-                <button @click="productsSection = true, dashboardSection = false, createSection = false"
-                        :class="productsSection ? 'active': ''">
-                    Products
-                </button>
+            <div class="buttons d-flex flex-column">
+                <router-link :to="{ name: 'dashboard' }" class="button d-flex justify-content-center align-items-center">Dashboard</router-link>
+                <router-link :to="{ name: 'create' }" class="button d-flex justify-content-center align-items-center">Create</router-link>
+                <router-link :to="{name: 'products'}" class="button d-flex justify-content-center align-items-center">Products</router-link>
             </div>
         </div>
         <div class="right w-100">
-            
-            <dashboard-component v-if="dashboardSection"></dashboard-component>
-            <div v-if="createSection">
-                @include('partials.flash')
-                <create-component></create-component>
-            </div>
-            <products-component v-if="productsSection"></products-component>
+            @include('partials.flash')
+            <router-view></router-view>
         </div>
     </div>
 @endsection
