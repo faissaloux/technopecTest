@@ -2129,6 +2129,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2168,6 +2189,36 @@ __webpack_require__.r(__webpack_exports__);
     },
     idExists: function idExists(option) {
       return document.body.contains(document.getElementById(option)) || null;
+    },
+    fillOneVariant: function fillOneVariant(option, index) {
+      var val = this.idExists(index) && document.getElementById(index).innerHTML;
+      console.log(val);
+      this.variants.push({
+        id: index
+      });
+      this.variants[this.variants.length - 1].price = this.priceList[this.variants.length - 1];
+      ;
+      this.variants[this.variants.length - 1].quantity = this.quantityList[this.variants.length - 1];
+
+      switch (option) {
+        case 'size':
+          this.variants[this.variants.length - 1].size = val;
+          this.variants[this.variants.length - 1].color = null;
+          this.variants[this.variants.length - 1].material = null;
+          break;
+
+        case 'color':
+          this.variants[this.variants.length - 1].color = val;
+          this.variants[this.variants.length - 1].size = null;
+          this.variants[this.variants.length - 1].material = null;
+          break;
+
+        case 'material':
+          this.variants[this.variants.length - 1].material = val;
+          this.variants[this.variants.length - 1].size = null;
+          this.variants[this.variants.length - 1].color = null;
+          break;
+      }
     },
     fillVariant: function fillVariant(i, index) {
       var sizeVal = this.idExists('size' + i * 10 + index) && document.getElementById('size' + i * 10 + index).innerHTML;
@@ -2308,12 +2359,20 @@ __webpack_require__.r(__webpack_exports__);
     create: function create() {
       var _this = this;
 
+      $("#saveBtn").val("Saving ...");
       axios.post('/cart/create', {
         title: this.title,
         description: this.description,
         variants: this.variants
+      }).then(function (response) {
+        $("#saveBtn").val("Saved").css("backgroundColor", "#5BED53");
+        ;
       })["catch"](function (error) {
+        $("#saveBtn").val("Something wrong").css("backgroundColor", "#ED5B53");
         _this.errorMsg = "Check if any field is empty!";
+        $("html").animate({
+          scrollTop: 0
+        }, 600);
       });
     }
   },
@@ -2344,7 +2403,7 @@ __webpack_require__.r(__webpack_exports__);
       this.colorTags = [], this.sizeTags = [], this.materialTags = [], this.options = [{
         option: 1,
         optionSelected: 'size'
-      }];
+      }], this.price = [], this.quantity = [], this.priceList = [], this.quantityList = [], this.variants = [];
     },
     price: function price() {
       this.priceList = this.price.filter(function (p) {
@@ -39312,7 +39371,10 @@ var render = function() {
                                             [
                                               _c(
                                                 "span",
-                                                { staticClass: "col-md-4" },
+                                                {
+                                                  staticClass: "col-md-4",
+                                                  attrs: { id: index }
+                                                },
                                                 [_vm._v(_vm._s(sizeTag.value))]
                                               ),
                                               _vm._v(" "),
@@ -39370,6 +39432,12 @@ var render = function() {
                                                   value: _vm.quantity[index]
                                                 },
                                                 on: {
+                                                  blur: function($event) {
+                                                    return _vm.fillOneVariant(
+                                                      "size",
+                                                      index
+                                                    )
+                                                  },
                                                   input: function($event) {
                                                     if (
                                                       $event.target.composing
@@ -39402,7 +39470,10 @@ var render = function() {
                                             [
                                               _c(
                                                 "span",
-                                                { staticClass: "col-md-4" },
+                                                {
+                                                  staticClass: "col-md-4",
+                                                  attrs: { id: index }
+                                                },
                                                 [_vm._v(_vm._s(colorTag.value))]
                                               ),
                                               _vm._v(" "),
@@ -39460,6 +39531,12 @@ var render = function() {
                                                   value: _vm.quantity[index]
                                                 },
                                                 on: {
+                                                  blur: function($event) {
+                                                    return _vm.fillOneVariant(
+                                                      "color",
+                                                      index
+                                                    )
+                                                  },
                                                   input: function($event) {
                                                     if (
                                                       $event.target.composing
@@ -39492,7 +39569,10 @@ var render = function() {
                                             [
                                               _c(
                                                 "span",
-                                                { staticClass: "col-md-4" },
+                                                {
+                                                  staticClass: "col-md-4",
+                                                  attrs: { id: index }
+                                                },
                                                 [
                                                   _vm._v(
                                                     _vm._s(materialTag.value)
@@ -39554,6 +39634,12 @@ var render = function() {
                                                   value: _vm.quantity[index]
                                                 },
                                                 on: {
+                                                  blur: function($event) {
+                                                    return _vm.fillOneVariant(
+                                                      "material",
+                                                      index
+                                                    )
+                                                  },
                                                   input: function($event) {
                                                     if (
                                                       $event.target.composing
@@ -40288,7 +40374,7 @@ var render = function() {
             _vm._v(" "),
             _c("input", {
               staticClass: "btn btn-primary float-right mt-2 col-4",
-              attrs: { type: "submit", value: "Save" }
+              attrs: { type: "submit", id: "saveBtn", value: "Save" }
             })
           ])
         ]

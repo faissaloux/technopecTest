@@ -101,23 +101,44 @@
                                     <div v-if="onlyOne">
                                         <div v-if="sizeTags.length">
                                             <div v-for="(sizeTag, index) in sizeTags" :key="index" class="row">
-                                                <span class="col-md-4">{{ sizeTag.value }}</span>
-                                                <input type="text" class="form-control col-md-4" placeholder="Price" v-model="price[index]">
-                                                <input type="number" class="form-control col-md-4" placeholder="Quantity" v-model="quantity[index]">
+                                                <span class="col-md-4" :id="index">{{ sizeTag.value }}</span>
+                                                <input  type="text"
+                                                        class="form-control col-md-4"
+                                                        placeholder="Price"
+                                                        v-model="price[index]">
+                                                <input  type="number"
+                                                        class="form-control col-md-4"
+                                                        placeholder="Quantity"
+                                                        v-model="quantity[index]"
+                                                        @blur="fillOneVariant('size', index)">
                                             </div>
                                         </div>
                                         <div v-else-if="colorTags.length">
                                             <div v-for="(colorTag, index) in colorTags" :key="index" class="row">
-                                                <span class="col-md-4">{{ colorTag.value }}</span>
-                                                <input type="text" class="form-control col-md-4" placeholder="Price" v-model="price[index]">
-                                                <input type="number" class="form-control col-md-4" placeholder="Quantity" v-model="quantity[index]">
+                                                <span class="col-md-4" :id="index">{{ colorTag.value }}</span>
+                                                <input  type="text"
+                                                        class="form-control col-md-4"
+                                                        placeholder="Price"
+                                                        v-model="price[index]">
+                                                <input  type="number"
+                                                        class="form-control col-md-4"
+                                                        placeholder="Quantity"
+                                                        v-model="quantity[index]"
+                                                        @blur="fillOneVariant('color', index)">
                                             </div>
                                         </div>
                                         <div v-else-if="materialTags.length">
                                             <div v-for="(materialTag, index) in materialTags" :key="index" class="row">
-                                                <span class="col-md-4">{{ materialTag.value }}</span>
-                                                <input type="text" class="form-control col-md-4" placeholder="Price" v-model="price[index]">
-                                                <input type="number" class="form-control col-md-4" placeholder="Quantity" v-model="quantity[index]">
+                                                <span class="col-md-4" :id="index">{{ materialTag.value }}</span>
+                                                <input  type="text"
+                                                        class="form-control col-md-4"
+                                                        placeholder="Price"
+                                                        v-model="price[index]">
+                                                <input  type="number"
+                                                        class="form-control col-md-4"
+                                                        placeholder="Quantity"
+                                                        v-model="quantity[index]"
+                                                        @blur="fillOneVariant('material', index)">
                                             </div>
                                         </div>
                                     </div> <!-- One variant end -->
@@ -211,7 +232,7 @@
 
                         </div> <!-- End of option section -->
                     </div> <!-- Variants section end -->
-                    <input type="submit" class="btn btn-primary float-right mt-2 col-4" value="Save">
+                    <input type="submit" class="btn btn-primary float-right mt-2 col-4" id="saveBtn" value="Save">
                 </div>
 
             </form>
@@ -259,6 +280,30 @@ export default {
         },
         idExists(option){
             return document.body.contains(document.getElementById(option)) || null;
+        },
+        fillOneVariant(option, index){
+            let val = this.idExists(index) && document.getElementById(index).innerHTML;
+            console.log(val);
+            this.variants.push({id: index});
+            this.variants[this.variants.length-1].price = this.priceList[this.variants.length-1];;
+            this.variants[this.variants.length-1].quantity = this.quantityList[this.variants.length-1];
+            switch(option){
+                case 'size':
+                    this.variants[this.variants.length-1].size = val
+                    this.variants[this.variants.length-1].color = null
+                    this.variants[this.variants.length-1].material = null
+                    break;
+                case 'color':
+                    this.variants[this.variants.length-1].color = val
+                    this.variants[this.variants.length-1].size = null
+                    this.variants[this.variants.length-1].material = null
+                    break;
+                case 'material':
+                    this.variants[this.variants.length-1].material = val
+                    this.variants[this.variants.length-1].size = null
+                    this.variants[this.variants.length-1].color = null
+                    break;
+            }
         },
         fillVariant(i, index){
             let sizeVal = this.idExists('size'+i*10+index) && document.getElementById('size'+i*10+index).innerHTML;
@@ -362,13 +407,19 @@ export default {
             e.target.value.length === 0 && this.removeTag(i-1, option);
         },
         create(){
+            $("#saveBtn").val("Saving ...");
             axios.post('/cart/create',
             {   title: this.title,
                 description: this.description,
                 variants: this.variants,
             })
+            .then( response => {
+                $("#saveBtn").val("Saved").css("backgroundColor", "#5BED53");;
+            })
             .catch( error =>{
+                $("#saveBtn").val("Something wrong").css("backgroundColor", "#ED5B53");
                 this.errorMsg = "Check if any field is empty!"
+                $("html").animate({scrollTop: 0}, 600);
             })
         }
         
@@ -403,7 +454,13 @@ export default {
             this.options = [{
                 option: 1,
                 optionSelected: 'size'
-            }]
+            }],
+            this.price = [],
+            this.quantity = [],
+            this.priceList = [],
+            this.quantityList = [],
+            this.variants = []
+
         },
         price(){
             this.priceList = this.price.filter(p => Number.isInteger(parseInt(p)));
