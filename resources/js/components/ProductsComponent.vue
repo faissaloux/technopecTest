@@ -35,7 +35,19 @@
                                         <div class="w-100" :class="product.variants.length > 3 ? 'scroll' : ''">
                                             <p class="title" v-if="product.variants.length">Variants: </p>
                                             <div v-for="variant in product.variants" :key="variant.id">
-                                                <div v-if="variant.size">
+                                                <div v-if="variant.size && variant.color && variant.material">
+                                                    <span class="col-4">{{ variant.size }}/{{ variant.color }}/{{ variant.material }}</span>
+                                                    <span class="col-4">
+                                                        <span>{{ variant.price }}</span>
+                                                        <span>&nbsp; MAD</span>
+                                                    </span>
+                                                    <span class="col-4">
+                                                        <span>{{ variant.quantity }}</span>
+                                                        <span v-if="variant.quantity == 1">Piece</span>
+                                                        <span v-else-if="variant.quantity > 1">Pieces</span>
+                                                    </span>
+                                                </div>
+                                                <div v-else-if="variant.size">
                                                     <p v-if="variant.color">
                                                         <span class="col-4">{{ variant.size }}/{{ variant.color }}</span>
                                                         <span class="col-4">

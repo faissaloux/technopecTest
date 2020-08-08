@@ -2598,6 +2598,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -40680,7 +40692,61 @@ var render = function() {
                                     _vm._v(" "),
                                     _vm._l(product.variants, function(variant) {
                                       return _c("div", { key: variant.id }, [
-                                        variant.size
+                                        variant.size &&
+                                        variant.color &&
+                                        variant.material
+                                          ? _c("div", [
+                                              _c(
+                                                "span",
+                                                { staticClass: "col-4" },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(variant.size) +
+                                                      "/" +
+                                                      _vm._s(variant.color) +
+                                                      "/" +
+                                                      _vm._s(variant.material)
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "span",
+                                                { staticClass: "col-4" },
+                                                [
+                                                  _c("span", [
+                                                    _vm._v(
+                                                      _vm._s(variant.price)
+                                                    )
+                                                  ]),
+                                                  _vm._v(" "),
+                                                  _c("span", [_vm._v("  MAD")])
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "span",
+                                                { staticClass: "col-4" },
+                                                [
+                                                  _c("span", [
+                                                    _vm._v(
+                                                      _vm._s(variant.quantity)
+                                                    )
+                                                  ]),
+                                                  _vm._v(" "),
+                                                  variant.quantity == 1
+                                                    ? _c("span", [
+                                                        _vm._v("Piece")
+                                                      ])
+                                                    : variant.quantity > 1
+                                                    ? _c("span", [
+                                                        _vm._v("Pieces")
+                                                      ])
+                                                    : _vm._e()
+                                                ]
+                                              )
+                                            ])
+                                          : variant.size
                                           ? _c("div", [
                                               variant.color
                                                 ? _c("p", [
