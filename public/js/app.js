@@ -2150,6 +2150,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2192,7 +2197,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     fillOneVariant: function fillOneVariant(option, index) {
       var val = this.idExists(index) && document.getElementById(index).innerHTML;
-      console.log(val);
       this.variants.push({
         id: index
       });
@@ -2227,6 +2231,19 @@ __webpack_require__.r(__webpack_exports__);
 
       this.variants.push({
         id: i * 10 + index
+      });
+      this.variants[this.variants.length - 1].price = this.priceList[this.variants.length - 1];
+      this.variants[this.variants.length - 1].quantity = this.quantityList[this.variants.length - 1];
+      this.variants[this.variants.length - 1].size = sizeVal;
+      this.variants[this.variants.length - 1].color = colorVal;
+      this.variants[this.variants.length - 1].material = materialVal;
+    },
+    fillThreeVariants: function fillThreeVariants(i, index, k) {
+      var sizeVal = this.idExists('size' + i * 100 + index * 10 + k) && document.getElementById('size' + i * 100 + index * 10 + k).innerHTML;
+      var colorVal = this.idExists('color' + i * 100 + index * 10 + k) && document.getElementById('color' + i * 100 + index * 10 + k).innerHTML;
+      var materialVal = this.idExists('material' + i * 100 + index * 10 + k) && document.getElementById('material' + i * 100 + index * 10 + k).innerHTML;
+      this.variants.push({
+        id: i * 100 + index * 10 + k
       });
       this.variants[this.variants.length - 1].price = this.priceList[this.variants.length - 1];
       this.variants[this.variants.length - 1].quantity = this.quantityList[this.variants.length - 1];
@@ -39670,11 +39687,11 @@ var render = function() {
                                               "div",
                                               _vm._l(_vm.sizeTags, function(
                                                 sizeTag,
-                                                index
+                                                i
                                               ) {
                                                 return _c(
                                                   "div",
-                                                  { key: index },
+                                                  { key: i },
                                                   _vm._l(
                                                     _vm.colorTags,
                                                     function(colorTag, index) {
@@ -39685,12 +39702,12 @@ var render = function() {
                                                           _vm.materialTags,
                                                           function(
                                                             materialTag,
-                                                            index
+                                                            k
                                                           ) {
                                                             return _c(
                                                               "div",
                                                               {
-                                                                key: index,
+                                                                key: k,
                                                                 staticClass:
                                                                   "row"
                                                               },
@@ -39702,18 +39719,74 @@ var render = function() {
                                                                       "col-md-4"
                                                                   },
                                                                   [
-                                                                    _vm._v(
-                                                                      _vm._s(
-                                                                        sizeTag.value
-                                                                      ) +
-                                                                        "/" +
-                                                                        _vm._s(
-                                                                          colorTag.value
-                                                                        ) +
-                                                                        "/" +
-                                                                        _vm._s(
-                                                                          materialTag.value
+                                                                    _c(
+                                                                      "span",
+                                                                      {
+                                                                        attrs: {
+                                                                          id:
+                                                                            "size" +
+                                                                            i *
+                                                                              100 +
+                                                                            index *
+                                                                              10 +
+                                                                            k
+                                                                        }
+                                                                      },
+                                                                      [
+                                                                        _vm._v(
+                                                                          _vm._s(
+                                                                            sizeTag.value
+                                                                          )
                                                                         )
+                                                                      ]
+                                                                    ),
+                                                                    _vm._v(
+                                                                      "/\n                                                        "
+                                                                    ),
+                                                                    _c(
+                                                                      "span",
+                                                                      {
+                                                                        attrs: {
+                                                                          id:
+                                                                            "color" +
+                                                                            i *
+                                                                              100 +
+                                                                            index *
+                                                                              10 +
+                                                                            k
+                                                                        }
+                                                                      },
+                                                                      [
+                                                                        _vm._v(
+                                                                          _vm._s(
+                                                                            colorTag.value
+                                                                          )
+                                                                        )
+                                                                      ]
+                                                                    ),
+                                                                    _vm._v(
+                                                                      "/\n                                                        "
+                                                                    ),
+                                                                    _c(
+                                                                      "span",
+                                                                      {
+                                                                        attrs: {
+                                                                          id:
+                                                                            "material" +
+                                                                            i *
+                                                                              100 +
+                                                                            index *
+                                                                              10 +
+                                                                            k
+                                                                        }
+                                                                      },
+                                                                      [
+                                                                        _vm._v(
+                                                                          _vm._s(
+                                                                            materialTag.value
+                                                                          )
+                                                                        )
+                                                                      ]
                                                                     )
                                                                   ]
                                                                 ),
@@ -39728,12 +39801,14 @@ var render = function() {
                                                                       value:
                                                                         _vm
                                                                           .price[
-                                                                          _vm.i *
-                                                                            10 +
-                                                                            index
+                                                                          i *
+                                                                            100 +
+                                                                            index *
+                                                                              10 +
+                                                                            k
                                                                         ],
                                                                       expression:
-                                                                        "price[i*10+index]"
+                                                                        "price[i*100+index*10+k]"
                                                                     }
                                                                   ],
                                                                   staticClass:
@@ -39747,9 +39822,11 @@ var render = function() {
                                                                   domProps: {
                                                                     value:
                                                                       _vm.price[
-                                                                        _vm.i *
-                                                                          10 +
-                                                                          index
+                                                                        i *
+                                                                          100 +
+                                                                          index *
+                                                                            10 +
+                                                                          k
                                                                       ]
                                                                   },
                                                                   on: {
@@ -39765,9 +39842,11 @@ var render = function() {
                                                                       }
                                                                       _vm.$set(
                                                                         _vm.price,
-                                                                        _vm.i *
-                                                                          10 +
-                                                                          index,
+                                                                        i *
+                                                                          100 +
+                                                                          index *
+                                                                            10 +
+                                                                          k,
                                                                         $event
                                                                           .target
                                                                           .value
@@ -39786,12 +39865,14 @@ var render = function() {
                                                                       value:
                                                                         _vm
                                                                           .quantity[
-                                                                          _vm.i *
-                                                                            10 +
-                                                                            index
+                                                                          i *
+                                                                            100 +
+                                                                            index *
+                                                                              10 +
+                                                                            k
                                                                         ],
                                                                       expression:
-                                                                        "quantity[i*10+index]"
+                                                                        "quantity[i*100+index*10+k]"
                                                                     }
                                                                   ],
                                                                   staticClass:
@@ -39806,12 +39887,23 @@ var render = function() {
                                                                     value:
                                                                       _vm
                                                                         .quantity[
-                                                                        _vm.i *
-                                                                          10 +
-                                                                          index
+                                                                        i *
+                                                                          100 +
+                                                                          index *
+                                                                            10 +
+                                                                          k
                                                                       ]
                                                                   },
                                                                   on: {
+                                                                    blur: function(
+                                                                      $event
+                                                                    ) {
+                                                                      return _vm.fillThreeVariants(
+                                                                        i,
+                                                                        index,
+                                                                        k
+                                                                      )
+                                                                    },
                                                                     input: function(
                                                                       $event
                                                                     ) {
@@ -39824,9 +39916,11 @@ var render = function() {
                                                                       }
                                                                       _vm.$set(
                                                                         _vm.quantity,
-                                                                        _vm.i *
-                                                                          10 +
-                                                                          index,
+                                                                        i *
+                                                                          100 +
+                                                                          index *
+                                                                            10 +
+                                                                          k,
                                                                         $event
                                                                           .target
                                                                           .value

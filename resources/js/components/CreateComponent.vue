@@ -147,18 +147,23 @@
                                         <div v-if="sizeTags.length">
                                             <!-- All three variants -->
                                             <div v-if="materialTags.length">
-                                                <div v-for="(sizeTag, index) in sizeTags" :key="index">
+                                                <div v-for="(sizeTag, i) in sizeTags" :key="i">
                                                     <div v-for="(colorTag, index) in colorTags" :key="index">
-                                                        <div v-for="(materialTag, index) in materialTags" :key="index" class="row">
-                                                            <span class="col-md-4">{{ sizeTag.value }}/{{ colorTag.value }}/{{ materialTag.value }}</span>
+                                                        <div v-for="(materialTag, k) in materialTags" :key="k" class="row">
+                                                            <span class="col-md-4">
+                                                            <span :id="'size'+i*100+index*10+k">{{ sizeTag.value }}</span>/
+                                                            <span :id="'color'+i*100+index*10+k">{{ colorTag.value }}</span>/
+                                                            <span :id="'material'+i*100+index*10+k">{{ materialTag.value }}</span>
+                                                        </span>
                                                             <input  type="text"
                                                                     class="form-control col-md-4"
                                                                     placeholder="Price"
-                                                                    v-model="price[i*10+index]">
+                                                                    v-model="price[i*100+index*10+k]">
                                                             <input  type="number"
                                                                     class="form-control col-md-4"
                                                                     placeholder="Quantity"
-                                                                    v-model="quantity[i*10+index]">
+                                                                    v-model="quantity[i*100+index*10+k]"
+                                                                    @blur="fillThreeVariants(i, index, k)">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -283,7 +288,7 @@ export default {
         },
         fillOneVariant(option, index){
             let val = this.idExists(index) && document.getElementById(index).innerHTML;
-            console.log(val);
+
             this.variants.push({id: index});
             this.variants[this.variants.length-1].price = this.priceList[this.variants.length-1];;
             this.variants[this.variants.length-1].quantity = this.quantityList[this.variants.length-1];
@@ -312,6 +317,18 @@ export default {
 
             // variants
             this.variants.push({id: i*10+index});
+            this.variants[this.variants.length-1].price = this.priceList[this.variants.length-1];
+            this.variants[this.variants.length-1].quantity = this.quantityList[this.variants.length-1];
+            this.variants[this.variants.length-1].size = sizeVal;
+            this.variants[this.variants.length-1].color = colorVal;
+            this.variants[this.variants.length-1].material = materialVal;
+        },
+        fillThreeVariants(i, index, k){
+            let sizeVal = this.idExists('size'+i*100+index*10+k) && document.getElementById('size'+i*100+index*10+k).innerHTML;
+            let colorVal = this.idExists('color'+i*100+index*10+k) && document.getElementById('color'+i*100+index*10+k).innerHTML;
+            let materialVal = this.idExists('material'+i*100+index*10+k) && document.getElementById('material'+i*100+index*10+k).innerHTML;
+
+            this.variants.push({id: i*100+index*10+k});
             this.variants[this.variants.length-1].price = this.priceList[this.variants.length-1];
             this.variants[this.variants.length-1].quantity = this.quantityList[this.variants.length-1];
             this.variants[this.variants.length-1].size = sizeVal;
