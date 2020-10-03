@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ProductSaved;
 use App\Http\Requests\productRequest;
 use App\Repositories\ProductRepositoryInterface;
-use App\Repositories\VariantRepositoryInterface;
 
 class ProductController extends Controller
 {
@@ -14,24 +14,15 @@ class ProductController extends Controller
    */
     private $product;
 
-     /**
-     * @var VariantRepositoryInterface
-     */
-    private $variant;
-
     /**
    * Product Controller constructor
    * 
    * @param ProductRepositoryInterface $product
-   * @param VariantRepositoryInterface $variant
    * @return void
    */
-    public function __construct(
-        ProductRepositoryInterface $product,
-        VariantRepositoryInterface $variant)
+    public function __construct(ProductRepositoryInterface $product)
     {
         $this->product = $product;
-        $this->variant = $variant;
     }
 
     public function create(productRequest $request)
@@ -40,12 +31,7 @@ class ProductController extends Controller
         $product = $this->product->newProduct($request);
         $product->save();
         
-        if(count($request->variants)){
-            foreach($request->variants as $v){
-                $variant = $this->variant->newVariant($v);
-                $product->variants()->save($variant);
-            }
-        }
+        event(new ProductSaved($request, $product));
 
         if($product->save()){
             session()->flash('success', 'Product added successfully');
