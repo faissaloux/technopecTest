@@ -26,6 +26,7 @@
             productDetails(productId){
                 this.$store.dispatch("updateProductInfoDetails", productId);
                 $("html").animate({scrollTop: 0}, 600);
+                $("html").css("overflowY", "hidden");
             }
         },
     }

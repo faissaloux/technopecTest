@@ -2496,6 +2496,7 @@ __webpack_require__.r(__webpack_exports__);
       $("html").animate({
         scrollTop: 0
       }, 600);
+      $("html").css("overflowY", "hidden");
     }
   }
 });
@@ -2676,6 +2677,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     closeProductDetails: function closeProductDetails() {
       this.$store.dispatch('updateProductInfoDetails', 0);
+      $("html").css("overflowY", "scroll");
     }
   }
 });

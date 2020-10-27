@@ -164,6 +164,7 @@
         methods:{
             closeProductDetails(){
                 this.$store.dispatch('updateProductInfoDetails', 0);
+                $("html").css("overflowY", "scroll");
             }
         }
     }
