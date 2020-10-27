@@ -10,7 +10,7 @@ window.Vue = require('vue');
 import Products from './components/ProductsComponent.vue';
 import Dashboard from './components/DashboardComponent.vue';
 import Create from './components/CreateComponent.vue';
-
+import ProductsStore from './components/stores/ProductsStore';
 import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
@@ -45,8 +45,6 @@ Vue.component('create-component', require('./components/CreateComponent.vue').de
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-import Vue from 'vue';
-import ProductsStore from './components/stores/ProductsStore';
 
 const cart = new Vue({
     router,
