@@ -11,13 +11,8 @@
                 </div>
                 <div class="row container">
                     <div class="card col-md-3" v-for="product in products" :key="product.id">
-                        <img class="card-img-top" src="/images/products/product1.jpg" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ product.product }}</h5>
-                            <p class="card-text">{{ product.description }}</p>
-                            <p>Quantity: {{ product.variants.length ? '+'+product.variants.length : 1 }}</p>
-                            <button @click="productDetails(product.id)" class="btn btn-primary float-right">Details</button>
-                        </div>
+                        <product-card   :product="product"
+                                        @updateProductInfoDetails="updateProductInfoDetails"/>
                     </div>
                 </div> <!-- End product card -->
                 <div v-for="product in products" :key="product.id">
@@ -141,31 +136,7 @@
     </div>
 </template>
 
-<script>
-export default {
-    data(){
-        return{
-            products: [],
-            productInfoDetails: 0
-        }
-    },
-    methods:{
-        productDetails(productId){
-            this.productInfoDetails = productId;
-            $("html").animate({scrollTop: 0}, 600);
-        }
-    },
-    mounted(){
-        axios.get('/cart/show')
-        .then(response => {
-            this.products = response.data;
-            $("div.loading").fadeOut();
-        });
-    },
-}
-</script>
-
-<style scoped lang="scss">
+<style lang="scss" scoped>
     div.loading{
         position: absolute;
         z-index: 2;
@@ -258,3 +229,31 @@ export default {
         }
     }
 </style>
+
+<script>
+    import productCard from "./ProductCardComponent";
+
+    export default {
+        components:{
+            productCard
+        },
+        data(){
+            return{
+                products: [],
+                productInfoDetails: 0
+            }
+        },
+        methods:{
+            updateProductInfoDetails(updateProductInfoDetails){
+                this.productInfoDetails = updateProductInfoDetails;
+            }
+        },
+        mounted(){
+            axios.get('/cart/show')
+            .then(response => {
+                this.products = response.data;
+                $("div.loading").fadeOut();
+            });
+        },
+    }
+</script>
