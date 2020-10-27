@@ -5,16 +5,23 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state:{
-        productInfoDetails: 0
+        productInfoDetails: 0,
+        products: []
     },
     mutations:{
-        updateProductInfoDetails: (state, productInfoDetails) => {
+        productInfoDetailsMutation: (state, productInfoDetails) => {
             state.productInfoDetails = productInfoDetails;
+        },
+        productsMutation: (state, products) => {
+            state.products = products;
         }
     },
     actions:{
         updateProductInfoDetails: (context, productInfoDetails) => {
-            context.commit("updateProductInfoDetails", productInfoDetails);
+            context.commit("productInfoDetailsMutation", productInfoDetails);
+        },
+        updateProducts: (context, products) => {
+            context.commit("productsMutation", products);
         }
     }
 })
