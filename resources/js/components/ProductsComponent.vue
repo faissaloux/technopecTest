@@ -11,14 +11,13 @@
                 </div>
                 <div class="row container">
                     <div class="card col-md-3" v-for="product in products" :key="product.id">
-                        <product-card   :product="product"
-                                        @updateProductInfoDetails="updateProductInfoDetails"/>
+                        <product-card :product="product"/>
                     </div>
                 </div> <!-- End product card -->
                 <div v-for="product in products" :key="product.id">
                     <div class="productDetailsCont dC" v-if="productInfoDetails == product.id">
                         <div class="productDetails pD">
-                            <div class="close" @click="productInfoDetails = 0">X</div>
+                            <div class="close" @click="closeProductDetails">X</div>
                             <div class="d-flex">
                                 <p class="imgCont d-flex"></p>
                                 <div class="d-flex flex-column align-items-left w-100">
@@ -240,12 +239,11 @@
         data(){
             return{
                 products: [],
-                productInfoDetails: 0
             }
         },
         methods:{
-            updateProductInfoDetails(updateProductInfoDetails){
-                this.productInfoDetails = updateProductInfoDetails;
+            closeProductDetails(){
+                this.$store.dispatch('updateProductInfoDetails', 0);
             }
         },
         mounted(){
@@ -255,5 +253,10 @@
                 $("div.loading").fadeOut();
             });
         },
+        computed:{
+            productInfoDetails(){
+                return this.$store.state.productInfoDetails;
+            }
+        }
     }
 </script>

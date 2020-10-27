@@ -24,7 +24,7 @@
         },
         methods:{
             productDetails(productId){
-                this.$emit("updateProductInfoDetails", productId);
+                this.$store.dispatch("updateProductInfoDetails", productId);
                 $("html").animate({scrollTop: 0}, 600);
             }
         },
