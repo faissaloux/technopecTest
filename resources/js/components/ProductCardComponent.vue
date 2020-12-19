@@ -11,7 +11,11 @@
 </template>
 
 <style lang="scss" scoped>
-
+    .card-body button {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+    }
 </style>
 
 <script>
